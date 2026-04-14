@@ -13,6 +13,8 @@ class AttendanceController extends Controller
     public function index(Request $request): View
     {
         $pesertaId = $request->integer('peserta_id') ?: null;
+        $pembimbingId = $request->integer('pembimbing_id') ?: null;
+        
         $q = Attendance::query()
             ->with(['pesertaProfile.user'])
             ->orderByDesc('tanggal')
@@ -20,11 +22,22 @@ class AttendanceController extends Controller
 
         if ($pesertaId) {
             $q->where('peserta_profile_id', $pesertaId);
+        } elseif ($pembimbingId) {
+            $q->whereHas('pesertaProfile', function($query) use ($pembimbingId) {
+                $query->where('pembimbing_id', $pembimbingId);
+            });
         }
 
         $rows = $q->paginate(30)->withQueryString();
-        $pesertaList = PesertaProfile::query()->with('user')->orderBy('nim')->get();
+        
+        $pesertaListQuery = PesertaProfile::query()->with(['user', 'pembimbing'])->orderBy('nim');
+        if ($pembimbingId) {
+            $pesertaListQuery->where('pembimbing_id', $pembimbingId);
+        }
+        $pesertaList = $pesertaListQuery->get();
+        
+        $pembimbingList = \App\Models\PembimbingProfile::query()->with('user')->orderBy('id')->get();
 
-        return view('admin.attendance.index', compact('rows', 'pesertaList', 'pesertaId'));
+        return view('admin.attendance.index', compact('rows', 'pesertaList', 'pesertaId', 'pembimbingList', 'pembimbingId'));
     }
 }

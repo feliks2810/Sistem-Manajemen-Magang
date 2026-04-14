@@ -27,19 +27,41 @@ class ProfileController extends Controller
         }
 
         $data = $request->validate([
-            'phone' => ['nullable', 'string', 'max:32'],
-            'alamat' => ['nullable', 'string'],
+            'nim' => ['required', 'string', 'max:32'],
+            'jurusan' => ['required', 'string', 'max:128'],
+            'institusi' => ['required', 'string', 'max:128'],
+            'phone' => ['required', 'string', 'max:32'],
+            'alamat' => ['required', 'string'],
+            'avatar' => ['nullable', 'image', 'max:5120', 'mimes:jpg,jpeg,png'],
             'dokumen' => ['nullable', 'file', 'max:5120', 'mimes:pdf,jpg,jpeg,png'],
             'nama_dokumen' => ['nullable', 'string', 'max:128'],
+            'kategori_dokumen' => ['nullable', 'string', 'in:Surat Pengantar Magang,Surat Balasan Instansi,Lainnya'],
         ]);
 
+        // 1. Update Peserta Profiles
         $profile->update([
-            'phone' => $data['phone'] ?? $profile->phone,
-            'alamat' => $data['alamat'] ?? $profile->alamat,
+            'nim' => $data['nim'],
+            'jurusan' => $data['jurusan'],
+            'institusi' => $data['institusi'],
+            'phone' => $data['phone'],
+            'alamat' => $data['alamat'],
         ]);
 
+        // 2. Update Avatar in Users table
+        $avatarUploaded = false;
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            Auth::user()->update([
+                'avatar_path' => $avatarPath
+            ]);
+            $avatarUploaded = true;
+        }
+
+        // 3. Document Upload
         if ($request->hasFile('dokumen')) {
-            $nama = $data['nama_dokumen'] ?: $request->file('dokumen')->getClientOriginalName();
+            $kategori = $data['kategori_dokumen'] ?? 'Lainnya';
+            $nama = $data['nama_dokumen'] ?: ($kategori !== 'Lainnya' ? $kategori : $request->file('dokumen')->getClientOriginalName());
+            
             $path = $request->file('dokumen')->store('dokumen/'.$profile->id, 'public');
             Document::query()->create([
                 'peserta_profile_id' => $profile->id,
@@ -48,6 +70,10 @@ class ProfileController extends Controller
             ]);
         }
 
-        return redirect()->route('peserta.profile')->with('success', 'Profil diperbarui.');
+        $message = $avatarUploaded
+            ? 'Profil diperbarui dan foto profil berhasil diupload! 🎉'
+            : 'Profil berhasil diperbarui.';
+
+        return redirect()->route('peserta.profile')->with('success', $message);
     }
 }

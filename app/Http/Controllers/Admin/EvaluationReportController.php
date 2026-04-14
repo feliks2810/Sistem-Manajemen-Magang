@@ -14,25 +14,44 @@ class EvaluationReportController extends Controller
     public function index(Request $request): View
     {
         $pesertaId = $request->integer('peserta_id') ?: null;
+        $pembimbingId = $request->integer('pembimbing_id') ?: null;
+
         $q = Evaluation::query()
             ->with(['pesertaProfile.user', 'pembimbingProfile.user'])
             ->orderByDesc('updated_at');
+
+        if ($pembimbingId) {
+            $q->where('pembimbing_profile_id', $pembimbingId);
+        }
 
         if ($pesertaId) {
             $q->where('peserta_profile_id', $pesertaId);
         }
 
         $rows = $q->paginate(20)->withQueryString();
-        $pesertaList = PesertaProfile::query()->with('user')->orderBy('nim')->get();
+        
+        $pembimbingList = \App\Models\PembimbingProfile::query()->with('user')->get();
 
-        return view('admin.evaluation.index', compact('rows', 'pesertaList', 'pesertaId'));
+        $pesertaListQuery = PesertaProfile::query()->with('user')->orderBy('nim');
+        if ($pembimbingId) {
+            $pesertaListQuery->where('pembimbing_id', $pembimbingId);
+        }
+        $pesertaList = $pesertaListQuery->get();
+
+        return view('admin.evaluation.index', compact('rows', 'pesertaList', 'pembimbingList', 'pesertaId', 'pembimbingId'));
     }
 
     public function exportCsv(Request $request): StreamedResponse
     {
         $pesertaId = $request->integer('peserta_id') ?: null;
+        $pembimbingId = $request->integer('pembimbing_id') ?: null;
+
         $q = Evaluation::query()
             ->with(['pesertaProfile.user', 'pembimbingProfile.user']);
+
+        if ($pembimbingId) {
+            $q->where('pembimbing_profile_id', $pembimbingId);
+        }
 
         if ($pesertaId) {
             $q->where('peserta_profile_id', $pesertaId);

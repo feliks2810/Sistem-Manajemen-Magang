@@ -40,6 +40,42 @@ class AttendanceStatsService
         return round(min(100, ($effective / $workingDays) * 100), 2);
     }
 
+    /**
+     * Detail progress kehadiran termasuk jumlah hari hadir dan total hari kerja
+     */
+    public function attendanceProgressDetails(PesertaProfile $peserta): object
+    {
+        $start = $peserta->periode_mulai->copy()->startOfDay();
+        $end   = $peserta->periode_selesai->copy()->endOfDay();
+
+        // Total hari kerja dalam seluruh periode magang
+        $workingDays = $this->workingDaysInRange($start, $end);
+
+        // Batas atas query = hari ini ATAU akhir periode, mana yang lebih kecil
+        $upTo = Carbon::today()->lte($end) ? Carbon::today()->toDateString() : $end->toDateString();
+
+        $hadir = Attendance::query()
+            ->where('peserta_profile_id', $peserta->id)
+            ->whereBetween('tanggal', [$start->toDateString(), $upTo])
+            ->where('status', 'hadir')
+            ->count();
+
+        $izinSakit = Attendance::query()
+            ->where('peserta_profile_id', $peserta->id)
+            ->whereBetween('tanggal', [$start->toDateString(), $upTo])
+            ->whereIn('status', ['izin', 'sakit'])
+            ->count();
+
+        $effective = $hadir + $izinSakit;
+        $percent   = $workingDays > 0 ? round(min(100, ($effective / $workingDays) * 100), 2) : 0;
+
+        return (object) [
+            'total_hari' => $workingDays,
+            'hari_hadir' => $effective,
+            'persentase' => $percent,
+        ];
+    }
+
     public function workingDaysInRange(Carbon $start, Carbon $end): int
     {
         if ($start->gt($end)) {

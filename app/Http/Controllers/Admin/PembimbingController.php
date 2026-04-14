@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -37,14 +38,21 @@ class PembimbingController extends Controller
             'password' => ['required', 'min:8', 'confirmed'],
             'nip' => ['nullable', 'string', 'max:64'],
             'phone' => ['nullable', 'string', 'max:32'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
 
-        DB::transaction(function () use ($data): void {
+        $avatarPath = null;
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+        }
+
+        DB::transaction(function () use ($data, $avatarPath): void {
             $user = User::query()->create([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => $data['password'],
                 'role' => User::ROLE_PEMBIMBING,
+                'avatar' => $avatarPath,
             ]);
 
             PembimbingProfile::query()->create([
@@ -72,12 +80,22 @@ class PembimbingController extends Controller
             'password' => ['nullable', 'min:8', 'confirmed'],
             'nip' => ['nullable', 'string', 'max:64'],
             'phone' => ['nullable', 'string', 'max:32'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
 
-        DB::transaction(function () use ($data, $pembimbing): void {
+        $avatarPath = $pembimbing->user->avatar;
+        if ($request->hasFile('avatar')) {
+            if ($avatarPath) {
+                Storage::disk('public')->delete($avatarPath);
+            }
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+        }
+
+        DB::transaction(function () use ($data, $pembimbing, $avatarPath): void {
             $u = [
                 'name' => $data['name'],
                 'email' => $data['email'],
+                'avatar' => $avatarPath,
             ];
             if (! empty($data['password'])) {
                 $u['password'] = $data['password'];

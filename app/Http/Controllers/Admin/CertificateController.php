@@ -16,7 +16,8 @@ class CertificateController extends Controller
             'peserta_profile_id' => ['required', 'exists:peserta_profiles,id'],
         ]);
 
-        $peserta = PesertaProfile::query()->findOrFail($data['peserta_profile_id']);
+        $peserta = PesertaProfile::query()
+            ->findOrFail($data['peserta_profile_id']);
         $cert->generateOrRefresh($peserta);
 
         return redirect()

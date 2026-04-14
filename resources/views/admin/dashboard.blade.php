@@ -6,8 +6,8 @@
 @section('content')
 <div class="mb-6 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
     <div>
-        <h1 class="text-xl font-semibold tracking-tight text-slate-900 md:text-2xl">Selamat datang, {{ auth()->user()->name }}</h1>
-        <p class="mt-1 text-sm text-slate-500">Ringkasan aktivitas magang dan absensi.</p>
+        <h1 class="text-xl font-semibold tracking-tight text-slate-900 md:text-2xl">Selamat datang, {{ auth()->user()->name }} 👋</h1>
+        <p class="mt-1 text-sm text-slate-500">{{ now()->translatedFormat('l, d F Y') }} · Ringkasan aktivitas magang dan absensi.</p>
     </div>
     <a href="{{ route('admin.absensi.index') }}" class="mt-2 inline-flex shrink-0 items-center text-sm font-medium text-blue-600 hover:text-blue-700 sm:mt-0">Lihat semua absensi →</a>
 </div>

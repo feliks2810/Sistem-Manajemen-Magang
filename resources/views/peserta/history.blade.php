@@ -1,34 +1,117 @@
 @extends('layouts.panel')
 
-@section('title', 'Riwayat absensi — Peserta')
-@section('page_title', 'Riwayat absensi')
+@section('title', 'Riwayat Kehadiran — Peserta')
+@section('page_title', 'Riwayat Kehadiran')
 
 @section('content')
-<h1 class="mb-6 text-2xl font-bold text-slate-800">Riwayat absensi</h1>
-
-<div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
-    <table class="min-w-full text-left text-sm">
-        <thead class="border-b border-slate-200 bg-slate-50">
-            <tr>
-                <th class="px-4 py-3">Tanggal</th>
-                <th class="px-4 py-3">Status</th>
-                <th class="px-4 py-3">Check-in</th>
-                <th class="px-4 py-3">Check-out</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($rows as $r)
-                <tr class="border-b border-slate-100">
-                    <td class="px-4 py-3 font-mono">{{ $r->tanggal->format('d/m/Y') }}</td>
-                    <td class="px-4 py-3">{{ $r->status }}</td>
-                    <td class="px-4 py-3">{{ $r->check_in_at?->format('H:i') ?? '—' }}</td>
-                    <td class="px-4 py-3">{{ $r->check_out_at?->format('H:i') ?? '—' }}</td>
-                </tr>
-            @empty
-                <tr><td colspan="4" class="px-4 py-8 text-center text-slate-500">Belum ada data.</td></tr>
-            @endforelse
-        </tbody>
-    </table>
+<div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+    <div>
+        <h1 class="text-2xl font-bold tracking-tight text-slate-900">Riwayat Kehadiran</h1>
+        <p class="mt-1 text-sm text-slate-500">Rekap seluruh catatan absensi Anda selama periode magang.</p>
+    </div>
+    <a href="{{ route('peserta.dashboard') }}" class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Kembali ke dasbor
+    </a>
 </div>
-<div class="mt-4">{{ $rows->links() }}</div>
+
+<div class="overflow-hidden rounded-[14px] border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md hover:border-slate-300">
+    <div class="border-b border-slate-100 bg-slate-50/50 px-6 py-4 flex items-center justify-between gap-3">
+        <h2 class="font-semibold text-slate-800">Daftar Rekap Absensi</h2>
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            Total: {{ $rows->total() }} catatan
+        </span>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full text-left text-sm">
+            <thead>
+                <tr class="border-b border-slate-100 bg-slate-50/30">
+                    <th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Tanggal</th>
+                    <th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Status</th>
+                    <th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Check-in</th>
+                    <th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Check-out</th>
+                    <th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Durasi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+                @forelse($rows as $r)
+                    <tr class="transition-colors hover:bg-slate-50/60">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2.5">
+                                <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-slate-900">{{ $r->tanggal->translatedFormat('d M Y') }}</p>
+                                    <p class="text-xs text-slate-400 font-mono">{{ $r->tanggal->translatedFormat('l') }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            @php
+                                $statusConfig = match($r->status) {
+                                    'hadir'  => ['bg-emerald-50 text-emerald-700 ring-emerald-600/20', 'Hadir'],
+                                    'izin'   => ['bg-amber-50 text-amber-700 ring-amber-600/20', 'Izin'],
+                                    'sakit'  => ['bg-rose-50 text-rose-700 ring-rose-600/20', 'Sakit'],
+                                    'alpha'  => ['bg-slate-100 text-slate-600 ring-slate-500/20', 'Alpha'],
+                                    default  => ['bg-slate-100 text-slate-600 ring-slate-500/20', ucfirst($r->status)],
+                                };
+                            @endphp
+                            <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1 ring-inset {{ $statusConfig[0] }}">
+                                {{ $statusConfig[1] }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            @if($r->check_in_at)
+                                <span class="font-mono text-sm font-semibold text-slate-800">{{ $r->check_in_at->format('H:i') }}</span>
+                            @else
+                                <span class="text-slate-300 font-mono">—</span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4">
+                            @if($r->check_out_at)
+                                <span class="font-mono text-sm font-semibold text-slate-800">{{ $r->check_out_at->format('H:i') }}</span>
+                            @else
+                                <span class="text-slate-300 font-mono">—</span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4">
+                            @if($r->check_in_at && $r->check_out_at)
+                                @php
+                                    $diff = $r->check_in_at->diff($r->check_out_at);
+                                    $durasi = $diff->h . 'j ' . $diff->i . 'm';
+                                @endphp
+                                <span class="text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full font-mono">{{ $durasi }}</span>
+                            @else
+                                <span class="text-slate-300 text-xs font-mono">—</span>
+                            @endif
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="px-6 py-16 text-center">
+                            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-slate-400 mb-4">
+                                <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                            </div>
+                            <p class="text-sm font-semibold text-slate-700">Belum Ada Riwayat</p>
+                            <p class="text-xs text-slate-500 mt-1">Catatan kehadiran Anda akan muncul di sini setelah melakukan check-in.</p>
+                            <a href="{{ route('peserta.dashboard') }}" class="mt-4 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition-all">
+                                Mulai Check-in Sekarang
+                            </a>
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
+    @if($rows->hasPages())
+    <div class="border-t border-slate-100 bg-slate-50/30 px-6 py-4">
+        {{ $rows->links() }}
+    </div>
+    @endif
+</div>
 @endsection
+

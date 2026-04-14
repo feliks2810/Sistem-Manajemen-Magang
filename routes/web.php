@@ -1,17 +1,20 @@
 <?php
 
 use App\Http\Controllers\Admin\AttendanceController as AdminAttendanceController;
-use App\Http\Controllers\Admin\CertificateController as AdminCertificateController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\EvaluationReportController;
 use App\Http\Controllers\Admin\PembimbingController as AdminPembimbingController;
 use App\Http\Controllers\Admin\PesertaController as AdminPesertaController;
-use App\Http\Controllers\Admin\SertifikatPageController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\CertificateController as AdminCertificateController;
 use App\Http\Controllers\Pembimbing\DashboardController as PembimbingDashboardController;
 use App\Http\Controllers\Pembimbing\EvaluationController as PembimbingEvaluationController;
 use App\Http\Controllers\Pembimbing\LeaveRequestController as PembimbingLeaveRequestController;
+use App\Http\Controllers\Admin\SertifikatPageController as AdminSertifikatPageController;
+use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Peserta\AttendanceController as PesertaAttendanceController;
 use App\Http\Controllers\Peserta\CertificateController as PesertaCertificateController;
 use App\Http\Controllers\Peserta\DashboardController as PesertaDashboardController;
@@ -22,9 +25,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 
+Route::get('/lang/{lang}', function ($lang) {
+    if (in_array($lang, ['id', 'en'])) {
+        session(['locale' => $lang]);
+    }
+    return back();
+})->name('lang.switch');
+
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
+    Route::get('/lupa-password', [ForgotPasswordController::class, 'showForm'])->name('password.request');
+    Route::post('/lupa-password', [ForgotPasswordController::class, 'sendEmail'])->name('password.email');
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
@@ -43,9 +57,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/absensi', [AdminAttendanceController::class, 'index'])->name('absensi.index');
     Route::get('/penilaian', [EvaluationReportController::class, 'index'])->name('penilaian.index');
     Route::get('/penilaian/export', [EvaluationReportController::class, 'exportCsv'])->name('penilaian.export');
-
-    Route::get('/sertifikat', SertifikatPageController::class)->name('sertifikat.page');
+    Route::get('/sertifikat', AdminSertifikatPageController::class)->name('sertifikat.page');
     Route::post('/sertifikat/generate', [AdminCertificateController::class, 'generate'])->name('sertifikat.generate');
+
+    Route::get('/pengaturan/lokasi', [AdminSettingController::class, 'locationIndex'])->name('setting.location');
+    Route::post('/pengaturan/lokasi', [AdminSettingController::class, 'locationUpdate'])->name('setting.location.update');
 });
 
 Route::middleware(['auth', 'role:pembimbing'])->prefix('pembimbing')->name('pembimbing.')->group(function (): void {
@@ -59,6 +75,7 @@ Route::middleware(['auth', 'role:pembimbing'])->prefix('pembimbing')->name('pemb
     Route::get('/penilaian', [PembimbingEvaluationController::class, 'index'])->name('evaluation.index');
     Route::get('/penilaian/{peserta}/edit', [PembimbingEvaluationController::class, 'edit'])->name('evaluation.edit');
     Route::put('/penilaian/{peserta}', [PembimbingEvaluationController::class, 'update'])->name('evaluation.update');
+
 });
 
 Route::middleware(['auth', 'role:peserta'])->prefix('peserta')->name('peserta.')->group(function (): void {

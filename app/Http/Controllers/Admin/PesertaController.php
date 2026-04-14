@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -37,32 +38,30 @@ class PesertaController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'min:8', 'confirmed'],
-            'nim' => ['required', 'string', 'max:32'],
-            'jurusan' => ['nullable', 'string', 'max:128'],
-            'institusi' => ['nullable', 'string', 'max:128'],
-            'phone' => ['nullable', 'string', 'max:32'],
-            'alamat' => ['nullable', 'string'],
             'periode_mulai' => ['required', 'date'],
             'periode_selesai' => ['required', 'date', 'after_or_equal:periode_mulai'],
             'pembimbing_id' => ['nullable', 'exists:pembimbing_profiles,id'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
 
-        DB::transaction(function () use ($data): void {
+        $avatarPath = null;
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+        }
+
+        DB::transaction(function () use ($data, $avatarPath): void {
             $user = User::query()->create([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => $data['password'],
                 'role' => User::ROLE_PESERTA,
+                'avatar' => $avatarPath,
             ]);
 
             PesertaProfile::query()->create([
                 'user_id' => $user->id,
                 'pembimbing_id' => $data['pembimbing_id'] ?? null,
-                'nim' => $data['nim'],
-                'jurusan' => $data['jurusan'] ?? null,
-                'institusi' => $data['institusi'] ?? null,
-                'phone' => $data['phone'] ?? null,
-                'alamat' => $data['alamat'] ?? null,
+                'nim' => null, // Akan diisi mandiri oleh peserta nanti
                 'periode_mulai' => $data['periode_mulai'],
                 'periode_selesai' => $data['periode_selesai'],
             ]);
@@ -85,20 +84,25 @@ class PesertaController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($peserta->user_id)],
             'password' => ['nullable', 'min:8', 'confirmed'],
-            'nim' => ['required', 'string', 'max:32'],
-            'jurusan' => ['nullable', 'string', 'max:128'],
-            'institusi' => ['nullable', 'string', 'max:128'],
-            'phone' => ['nullable', 'string', 'max:32'],
-            'alamat' => ['nullable', 'string'],
             'periode_mulai' => ['required', 'date'],
             'periode_selesai' => ['required', 'date', 'after_or_equal:periode_mulai'],
             'pembimbing_id' => ['nullable', 'exists:pembimbing_profiles,id'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
 
-        DB::transaction(function () use ($data, $peserta): void {
+        $avatarPath = $peserta->user->avatar;
+        if ($request->hasFile('avatar')) {
+            if ($avatarPath) {
+                Storage::disk('public')->delete($avatarPath);
+            }
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+        }
+
+        DB::transaction(function () use ($data, $peserta, $avatarPath): void {
             $u = [
                 'name' => $data['name'],
                 'email' => $data['email'],
+                'avatar' => $avatarPath,
             ];
             if (! empty($data['password'])) {
                 $u['password'] = $data['password'];
@@ -107,11 +111,6 @@ class PesertaController extends Controller
 
             $peserta->update([
                 'pembimbing_id' => $data['pembimbing_id'] ?? null,
-                'nim' => $data['nim'],
-                'jurusan' => $data['jurusan'] ?? null,
-                'institusi' => $data['institusi'] ?? null,
-                'phone' => $data['phone'] ?? null,
-                'alamat' => $data['alamat'] ?? null,
                 'periode_mulai' => $data['periode_mulai'],
                 'periode_selesai' => $data['periode_selesai'],
             ]);

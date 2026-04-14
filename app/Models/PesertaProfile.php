@@ -15,6 +15,7 @@ class PesertaProfile extends Model
     protected $fillable = [
         'user_id',
         'pembimbing_id',
+        'jenis_program',
         'nim',
         'jurusan',
         'institusi',
