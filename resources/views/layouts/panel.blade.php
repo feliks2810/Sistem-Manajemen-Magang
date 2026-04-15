@@ -25,7 +25,6 @@
         {{-- Header Sidebar (Sejajar dengan Navbar h-16) --}}
         <div class="flex h-16 w-full items-center justify-between border-b border-slate-100 px-4 shrink-0">
             <a href="{{ $panelHome ?? route('admin.dashboard') }}" class="flex items-center gap-2 overflow-hidden mr-2">
-                <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-[11px] font-bold text-white shadow-sm">SM</div>
                 <span class="truncate font-bold tracking-widest text-slate-800 uppercase text-[11px]">SISTEM MAGANG</span>
             </a>
 
