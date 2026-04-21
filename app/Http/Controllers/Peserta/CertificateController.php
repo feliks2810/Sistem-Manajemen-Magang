@@ -22,11 +22,12 @@ class CertificateController extends Controller
 
         $certificate = Certificate::query()->where('peserta_profile_id', $profile->id)->first();
 
-        $eval = $profile->evaluations()->where('is_final', true)->latest()->first();
+        $eval = $profile->evaluations()->with('rubricScores.rubric')->where('is_final', true)->latest()->first();
         if (! $eval) {
             return view('peserta.certificate', [
                 'certificate' => null,
                 'profile' => $profile,
+                'eval' => null,
                 'message' => 'Penilaian akhir dari pembimbing belum tersedia.',
             ]);
         }
@@ -38,6 +39,7 @@ class CertificateController extends Controller
         return view('peserta.certificate', [
             'certificate' => $certificate,
             'profile' => $profile,
+            'eval' => $eval,
             'message' => null,
         ]);
     }
@@ -53,7 +55,7 @@ class CertificateController extends Controller
 
         return response()->download(
             Storage::disk('public')->path($certificate->file_path),
-            'sertifikat-magang-'.$profile->nim.'.pdf'
+            'sertifikat-magang-'.$profile->nim.'-BARU.pdf'
         );
     }
 

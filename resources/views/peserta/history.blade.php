@@ -9,10 +9,7 @@
         <h1 class="text-2xl font-bold tracking-tight text-slate-900">Riwayat Kehadiran</h1>
         <p class="mt-1 text-sm text-slate-500">Rekap seluruh catatan absensi Anda selama periode magang.</p>
     </div>
-    <a href="{{ route('peserta.dashboard') }}" class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        Kembali ke dasbor
-    </a>
+
 </div>
 
 <div class="overflow-hidden rounded-[14px] border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md hover:border-slate-300">

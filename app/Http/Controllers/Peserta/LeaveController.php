@@ -13,7 +13,14 @@ class LeaveController extends Controller
 {
     public function create(): View
     {
-        return view('peserta.leave.create');
+        $profile = Auth::user()->pesertaProfile;
+        
+        $history = LeaveRequest::query()
+            ->where('peserta_profile_id', $profile?->id)
+            ->latest()
+            ->get();
+            
+        return view('peserta.leave.create', compact('history'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -28,7 +35,9 @@ class LeaveController extends Controller
             'tanggal_selesai' => ['required', 'date', 'after_or_equal:tanggal_mulai'],
             'jenis' => ['required', 'in:izin,sakit'],
             'alasan' => ['required', 'string', 'max:2000'],
-            'bukti' => ['nullable', 'file', 'max:5120', 'mimes:pdf,jpg,jpeg,png'],
+            'bukti' => ['nullable', 'required_if:jenis,sakit', 'file', 'max:5120', 'mimes:pdf,jpg,jpeg,png'],
+        ], [
+            'bukti.required_if' => 'Surat Sakit dari Dokter wajib dilampirkan jika memilih jenis Sakit.'
         ]);
 
         $buktiPath = null;

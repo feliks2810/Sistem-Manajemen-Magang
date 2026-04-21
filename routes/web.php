@@ -59,6 +59,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/penilaian/export', [EvaluationReportController::class, 'exportCsv'])->name('penilaian.export');
     Route::get('/sertifikat', AdminSertifikatPageController::class)->name('sertifikat.page');
     Route::post('/sertifikat/generate', [AdminCertificateController::class, 'generate'])->name('sertifikat.generate');
+    Route::get('/sertifikat/download/{certificate}', [AdminCertificateController::class, 'download'])->name('sertifikat.download');
 
     Route::get('/pengaturan/lokasi', [AdminSettingController::class, 'locationIndex'])->name('setting.location');
     Route::post('/pengaturan/lokasi', [AdminSettingController::class, 'locationUpdate'])->name('setting.location.update');

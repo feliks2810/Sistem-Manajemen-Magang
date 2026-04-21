@@ -1,8 +1,8 @@
 @php
     $is = fn (string $name) => request()->routeIs($name);
     $u = auth()->user();
-    $activeClass = 'border-l-4 border-blue-600 bg-blue-50 text-blue-700 font-bold';
-    $inactiveClass = 'border-l-4 border-transparent text-slate-600 font-medium hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300 transition-all duration-200';
+    $activeClass = 'border-l-4 border-white active-menu-ivory font-bold shadow-sm';
+    $inactiveClass = 'border-l-4 border-transparent text-black font-medium hover:bg-white/10 hover:text-white transition-all duration-200';
 @endphp
 
 @if($u->isAdmin())

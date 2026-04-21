@@ -17,7 +17,7 @@ class EvaluationReportController extends Controller
         $pembimbingId = $request->integer('pembimbing_id') ?: null;
 
         $q = Evaluation::query()
-            ->with(['pesertaProfile.user', 'pembimbingProfile.user'])
+            ->with(['pesertaProfile.user', 'pembimbingProfile.user', 'rubricScores.rubric'])
             ->orderByDesc('updated_at');
 
         if ($pembimbingId) {

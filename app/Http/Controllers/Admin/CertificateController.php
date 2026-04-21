@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Certificate;
 use App\Models\PesertaProfile;
 use App\Services\CertificateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CertificateController extends Controller
 {
@@ -23,5 +26,17 @@ class CertificateController extends Controller
         return redirect()
             ->route('admin.sertifikat.page')
             ->with('success', 'Sertifikat PDF berhasil dibuat/diperbarui.');
+    }
+
+    public function download(Certificate $certificate): BinaryFileResponse|RedirectResponse
+    {
+        if (! $certificate->file_path || ! Storage::disk('public')->exists($certificate->file_path)) {
+            return back()->with('error', 'File sertifikat belum tersedia atau tidak ditemukan.');
+        }
+
+        return response()->download(
+            Storage::disk('public')->path($certificate->file_path),
+            'sertifikat-magang-'.$certificate->pesertaProfile->nim.'-BARU.pdf'
+        );
     }
 }

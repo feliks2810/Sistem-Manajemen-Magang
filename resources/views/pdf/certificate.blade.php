@@ -1,67 +1,172 @@
+@php
+    function getBase64Image($path) {
+        if (!file_exists($path)) return '';
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        return 'data:image/' . $type . ';base64,' . base64_encode($data);
+    }
+    function getBase64Font($path) {
+        if (!file_exists($path)) return '';
+        $data = file_get_contents($path);
+        return 'data:font/truetype;base64,' . base64_encode($data);
+    }
+    
+    $bgBase64   = getBase64Image(public_path('template/sertifikat_botania_small.jpg'));
+    $fontMontB  = getBase64Font(public_path('fonts/Montserrat-ExtraBold.ttf'));
+    $fontMontSB = getBase64Font(public_path('fonts/Montserrat-SemiBold.ttf'));
 
-<div style="width: 297mm; height: 210mm; font-family: Arial, sans-serif; color: #333; background-color: #ffffff; margin: 0; padding: 0; position: relative; overflow: hidden;">
-    <!-- Top Bar using a Table with thick border-top -->
-    <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-            <td style="border-top: 10mm solid #d32f2f; line-height: 1px;">&nbsp;</td>
-        </tr>
-    </table>
+    // Variabel Posisi
+    $jenisStr = strtolower($peserta->jenis_program ?? '');
+    if (str_contains($jenisStr, 'pkl') || str_contains($jenisStr, 'siswa')) {
+        $prefix = 'SISWA PKL';
+    } else {
+        $prefix = 'MAHASISWA';
+    }
+    $institusi = strtoupper($peserta->institusi ?? 'INSTITUSI');
+    $posisi = $prefix . ' DARI ' . $institusi;
 
-    <div style="padding: 20mm; text-align: center;">
-        <div style="font-size: 32px; font-weight: bold; color: #d32f2f; margin-top: 5mm;">
-            RS AWAL BROS
-        </div>
-        
-        <div style="font-size: 60px; font-weight: bold; color: #1565c0; margin: 15px 0;">
-            SERTIFIKAT
-        </div>
-        
-        <div style="font-size: 18px; margin-bottom: 5mm;">
-            Diberikan kepada:
-        </div>
-        
-        <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" style="margin: 10mm auto; border-bottom: 3px solid #000;">
-            <tr>
-                <td align="center" style="padding-bottom: 5px;">
-                    <span style="font-size: 40px; font-weight: bold; color: #000;">{{ strtoupper($peserta->user?->name ?? 'NAMA LENGKAP') }}</span>
-                </td>
-            </tr>
-        </table>
-        
-        <div style="font-size: 16px; color: #666; margin-top: 15px;">
-            Sebagai
-        </div>
-        
-        <div style="font-size: 24px; font-weight: bold; color: #000; margin-top: 10px;">
-            {{ $peserta->institusi }}
-        </div>
-        
-        <div style="font-size: 16px; line-height: 1.8; margin: 15mm 40mm;">
-            Telah Melaksanakan Program <strong>{{ $programName }}</strong> di RS Awal Bros Botania pada<br>
-            tanggal {{ $peserta->periode_mulai?->translatedFormat('d F Y') }} – {{ $peserta->periode_selesai?->translatedFormat('d F Y') }}
-        </div>
+    // Deskripsi Kegiatan (Periode - format lengkap dari database)
+    $periodeStr = '';
+    if ($peserta->periode_mulai && $peserta->periode_selesai) {
+        $start = $peserta->periode_mulai;
+        $end   = $peserta->periode_selesai;
+        $periodeStr = 'tanggal ' . $start->translatedFormat('d F Y') . ' – ' . $end->translatedFormat('d F Y');
+    }
 
-        <table width="100%" style="margin-top: 15mm;">
-            <tr>
-                <td width="50%" align="center">
-                    <div style="border: 2px solid #d32f2f; color: #d32f2f; font-weight: bold; font-size: 11px; padding: 12px; display: inline-block;">
-                        RS AWAL BROS<br>BOTANIA
-                    </div>
-                </td>
-                <td width="50%" align="center">
-                    <div style="font-size: 15px;">Batam, {{ $tanggal }}</div>
-                    <div style="height: 35mm;">&nbsp;</div>
-                    <div style="font-size: 18px; font-weight: bold; text-decoration: underline;">dr. Retno Kusumo, MARS</div>
-                    <div style="font-size: 15px; color: #555;">Direktur RS Awal Bros Botania</div>
-                </td>
-            </tr>
-        </table>
-    </div>
+    // Tanggal terbit
+    $tglTerbit = \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y');
+@endphp
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Sertifikat Magang</title>
+    <style>
+        @font-face {
+            font-family: 'MontserratEB';
+            font-weight: 800;
+            src: url('{{ $fontMontB }}') format('truetype');
+        }
+        @font-face {
+            font-family: 'MontserratSB';
+            font-weight: 600;
+            src: url('{{ $fontMontSB }}') format('truetype');
+        }
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 297mm;
+            height: 210mm;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
 
-    <!-- Bottom Bar Row -->
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="position: absolute; bottom: 0;">
-        <tr>
-            <td style="border-bottom: 10mm solid #1565c0; line-height: 1px;">&nbsp;</td>
-        </tr>
-    </table>
+        .sertifikat {
+            position: relative;
+            width: 297mm;
+            height: 210mm;
+            overflow: hidden;
+        }
+
+        .bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 297mm;
+            height: 210mm;
+            z-index: 0;
+        }
+
+        /* Posisi elemen - semua pakai mm untuk presisi DomPDF */
+        .no-cert {
+            position: absolute;
+            z-index: 1;
+            top: 2mm;
+            right: 15mm;
+            font-family: 'MontserratSB', 'Arial', sans-serif;
+            font-size: 10pt;
+            font-weight: 600;
+            color: #111;
+        }
+
+        .nama {
+            position: absolute;
+            z-index: 1;
+            top: 63mm;
+            left: 0;
+            width: 297mm;
+            text-align: center;
+            font-family: 'MontserratEB', 'Arial', sans-serif;
+            font-size: 37pt;
+            font-weight: 800;
+            color: #000;
+            letter-spacing: 1.5px;
+        }
+
+        .posisi {
+            position: absolute;
+            z-index: 1;
+            top: 105mm;
+            left: 0;
+            width: 297mm;
+            text-align: center;
+            font-family: 'MontserratEB', 'Arial', sans-serif;
+            font-size: 20pt;
+            font-weight: 800;
+            color: #111;
+        }
+
+        .deskripsi {
+            position: absolute;
+            z-index: 1;
+            top: 136mm;
+            left: 0;
+            width: 297mm;
+            text-align: center;
+            font-family: 'MontserratSB', 'Arial', sans-serif;
+            font-size: 16pt;
+            font-weight: 600;
+            color: #222;
+        }
+
+        .tanggal {
+            position: absolute;
+            z-index: 1;
+            top: 152mm;
+            left: 140mm;
+            font-size: 12pt;
+            color: #111;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sertifikat">
+    <img src="{{ $bgBase64 }}" class="bg" alt="">
+
+    <!-- Nomor saja, karena "No." sudah ada di gambar -->
+    <div class="no-cert">{{ $nomor }}</div>
+    
+    <div class="nama">{{ strtoupper($peserta->user?->name) }}</div>
+    
+    <div class="posisi">{{ $posisi }}</div>
+
+    <!-- Hanya menampilkan tanggal karena teks pengantar sudah ada di gambar -->
+    <div class="deskripsi">{{ $periodeStr }}</div>
+
+    <!-- Hanya menampilkan tanggal publis karena "Batam," sudah ada di gambar -->
+    <div class="tanggal">{{ $tglTerbit }}</div>
 </div>
+
+</body>
+</html>

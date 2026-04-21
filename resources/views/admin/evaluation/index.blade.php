@@ -60,7 +60,7 @@
 </div>
 
 <div class="overflow-hidden rounded-[14px] border border-slate-200/80 bg-white shadow-sm transition-all">
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto" x-data>
         <table class="min-w-full text-left text-sm whitespace-nowrap">
             <thead class="border-b border-slate-200 bg-slate-50/70">
                 <tr>
@@ -69,6 +69,7 @@
                     <th class="px-5 py-4 text-right font-semibold text-slate-800">Total Nilai</th>
                     <th class="px-5 py-4 font-semibold text-slate-800 whitespace-nowrap">Status Final</th>
                     <th class="px-5 py-4 font-semibold text-slate-800">Diperbarui</th>
+                    <th class="px-5 py-4 font-semibold text-slate-800 text-center">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-100">
@@ -95,10 +96,39 @@
                             @endif
                         </td>
                         <td class="px-5 py-4 text-slate-500 tabular-nums">{{ $ev->updated_at->format('d/m/Y H:i') }}</td>
+                        <td class="px-5 py-4 text-center">
+                            <button type="button" onclick="toggleDetail('detail-row-{{ $ev->id }}')" class="inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <span id="btn-text-{{ $ev->id }}">Info Detail</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr id="detail-row-{{ $ev->id }}" style="display: none;" class="bg-indigo-50/30 border-t-0">
+                        <td colspan="6" class="p-0">
+                            <div class="px-6 py-5">
+                                <h4 class="mb-3 text-sm font-bold text-slate-800">Rincian Penilaian :</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                                    @forelse($ev->rubricScores as $score)
+                                        <div class="rounded-xl border border-slate-200 bg-white p-3.5 shadow-sm transition-shadow hover:shadow-md">
+                                            <div class="text-xs font-medium text-slate-500 uppercase tracking-wide">{{ $score->rubric->name ?? 'Kriteria' }}</div>
+                                            <div class="mt-1 text-2xl font-bold text-slate-900">{{ $score->nilai }}</div>
+                                        </div>
+                                    @empty
+                                        <div class="text-sm text-slate-500 italic py-2">Belum ada rincian nilai.</div>
+                                    @endforelse
+                                </div>
+                                @if($ev->komentar_final)
+                                    <div class="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4">
+                                        <h5 class="text-xs font-bold uppercase tracking-wide text-amber-800 mb-1">Komentar Pembimbing</h5>
+                                        <p class="text-sm text-amber-900">{{ $ev->komentar_final }}</p>
+                                    </div>
+                                @endif
+                            </div>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="px-5 py-16 text-center text-slate-500">
+                        <td colspan="6" class="px-5 py-16 text-center text-slate-500">
                             <div class="flex flex-col items-center justify-center">
                                 <svg class="h-10 w-10 text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                 Belum ada data penilaian.
@@ -112,3 +142,21 @@
 </div>
 <div class="mt-6">{{ $rows->links() }}</div>
 @endsection
+
+@push('scripts')
+<script>
+    function toggleDetail(rowId) {
+        const row = document.getElementById(rowId);
+        const btnId = rowId.replace('detail-row-', '');
+        const btnText = document.getElementById('btn-text-' + btnId);
+        
+        if (row.style.display === 'none') {
+            row.style.display = 'table-row';
+            if (btnText) btnText.textContent = 'Tutup';
+        } else {
+            row.style.display = 'none';
+            if (btnText) btnText.textContent = 'Info Detail';
+        }
+    }
+</script>
+@endpush

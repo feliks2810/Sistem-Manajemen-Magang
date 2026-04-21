@@ -73,6 +73,28 @@
                 </div>
             </div>
 
+            {{-- Detail Nilai --}}
+            @if(isset($eval) && $eval->rubricScores->isNotEmpty())
+            <div class="mb-8">
+                <h3 class="mb-3 text-sm font-bold text-slate-800">Rincian Nilai Akhir</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    @foreach($eval->rubricScores as $score)
+                    <div class="rounded-lg border border-slate-100 bg-slate-50 p-4 shadow-sm">
+                        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 line-clamp-1" title="{{ $score->rubric->name ?? 'Kriteria' }}">{{ $score->rubric->name ?? 'Kriteria' }}</div>
+                        <div class="mt-1 text-xl font-bold text-slate-900">{{ $score->nilai }}</div>
+                    </div>
+                    @endforeach
+                </div>
+                
+                @if($eval->komentar_final)
+                    <div class="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4">
+                        <h5 class="text-[11px] font-bold uppercase tracking-wide text-amber-800 mb-1">Pesan / Komentar Pembimbing</h5>
+                        <p class="text-sm text-amber-900 italic">"{{ $eval->komentar_final }}"</p>
+                    </div>
+                @endif
+            </div>
+            @endif
+
             {{-- Actions --}}
             <div class="flex flex-wrap items-center gap-3">
                 <a href="{{ route('peserta.certificate.download') }}" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-900">

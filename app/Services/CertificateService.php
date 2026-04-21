@@ -48,7 +48,10 @@ class CertificateService
 
         $programName = str_contains(strtolower($peserta->peserta_type ?? ''), 'pkl') ? 'PKL' : 'MAGANG';
 
-        $pdf = Pdf::loadView('pdf.certificate', [
+        $pdf = Pdf::setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true
+        ])->loadView('pdf.certificate', [
             'peserta' => $peserta->load(['user', 'pembimbing.user']),
             'nomor' => $nomor,
             'kehadiran' => $persen,

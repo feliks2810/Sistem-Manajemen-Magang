@@ -9,10 +9,7 @@
         <h1 class="text-2xl font-bold tracking-tight text-slate-900">Formulir Pengajuan</h1>
         <p class="mt-1 text-sm text-slate-500">Ajukan izin atau sakit beserta bukti lampiran untuk dikonfirmasi pembimbing.</p>
     </div>
-    <a href="{{ route('peserta.dashboard') }}" class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        Kembali ke dasbor
-    </a>
+
 </div>
 
 <div class="rounded-[14px] border border-slate-200 bg-white p-6 shadow-sm md:p-8 max-w-2xl transition-all hover:shadow-md hover:border-slate-300">
@@ -81,8 +78,8 @@
         {{-- File Upload --}}
         <div>
             <label class="mb-1.5 block text-sm font-semibold text-slate-700">
-                Bukti Lampiran
-                <span class="ml-1 text-xs font-normal text-slate-400">(Surat Dokter / Sertifikat — PDF, JPG, PNG)</span>
+                Bukti Lampiran <span id="lampiran-required" class="{{ old('jenis') === 'sakit' ? '' : 'hidden' }} text-rose-500">*</span>
+                <span class="ml-1 text-xs font-normal text-slate-400">(Surat Dokter, Wajib jika "Sakit" — PDF, JPG, PNG)</span>
             </label>
             <div class="flex items-center gap-4 rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 p-5 transition-all focus-within:border-blue-500 focus-within:bg-blue-50/30 hover:border-slate-400">
                 <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white border border-slate-200 shadow-sm text-slate-400">
@@ -104,6 +101,42 @@
             </button>
         </div>
     </form>
+</div>
+
+{{-- Riwayat Izin/Sakit --}}
+<div class="mt-8 rounded-[14px] border border-slate-200 bg-white shadow-sm md:p-8 p-6 max-w-2xl">
+    <h3 class="mb-4 text-lg font-bold text-slate-800">Riwayat Pengajuan</h3>
+    <div class="space-y-4">
+        @forelse($history as $item)
+            <div class="flex flex-col gap-2 rounded-xl border {{ $item->status === 'approved' ? 'border-emerald-200 bg-emerald-50/50' : ($item->status === 'rejected' ? 'border-rose-200 bg-rose-50/50' : 'border-slate-200 bg-slate-50') }} p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold uppercase tracking-wide text-xs {{ $item->jenis === 'sakit' ? 'text-rose-600' : 'text-amber-600' }}">
+                            {{ $item->jenis }}
+                        </span>
+                        <span class="text-slate-400 text-xs">•</span>
+                        <span class="text-slate-600 text-sm font-medium">
+                            {{ \Carbon\Carbon::parse($item->tanggal_mulai)->format('d M Y') }} — {{ \Carbon\Carbon::parse($item->tanggal_selesai)->format('d M Y') }}
+                        </span>
+                    </div>
+                    <p class="mt-1 text-sm text-slate-700 font-medium">{{ $item->alasan }}</p>
+                </div>
+                <div>
+                    @if($item->status === 'approved')
+                        <span class="inline-flex items-center gap-1.5 rounded-lg bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800">Disetujui</span>
+                    @elseif($item->status === 'rejected')
+                        <span class="inline-flex items-center gap-1.5 rounded-lg bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-800">Ditolak</span>
+                    @else
+                        <span class="inline-flex items-center gap-1.5 rounded-lg bg-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-700">Menunggu</span>
+                    @endif
+                </div>
+            </div>
+        @empty
+            <div class="rounded-xl border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500">
+                Belum ada riwayat pengajuan izin atau sakit.
+            </div>
+        @endforelse
+    </div>
 </div>
 @endsection
 
@@ -127,6 +160,12 @@
                 circle.classList.remove('border-slate-300');
                 checkSvg.classList.add('opacity-100');
                 checkSvg.classList.remove('opacity-0');
+
+                if (value === 'sakit') {
+                    document.getElementById('lampiran-required').classList.remove('hidden');
+                } else {
+                    document.getElementById('lampiran-required').classList.add('hidden');
+                }
             } else {
                 card.classList.remove('border-blue-500', 'bg-blue-50/50');
                 card.classList.add('border-slate-200', 'bg-white');

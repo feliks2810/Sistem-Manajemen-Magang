@@ -75,6 +75,55 @@
         </div>
     </div>
 </div>
+
+{{-- Daftar Sertifikat --}}
+<div class="mt-8 mb-6">
+    <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <div>
+            <h3 class="text-lg font-bold tracking-tight text-slate-800">Daftar Sertifikat</h3>
+            <p class="mt-1 text-sm text-slate-500">Sertifikat milik peserta magang yang telah berhasil diterbitkan.</p>
+        </div>
+    </div>
+
+    <div class="overflow-hidden rounded-[14px] border border-slate-200/80 bg-white shadow-sm transition-all">
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-left text-sm whitespace-nowrap">
+                <thead class="border-b border-slate-200 bg-slate-50/70">
+                    <tr>
+                        <th class="px-5 py-4 font-semibold text-slate-800">Peserta</th>
+                        <th class="px-5 py-4 font-semibold text-slate-800">NIM / NIK</th>
+                        <th class="px-5 py-4 font-semibold text-slate-800">Tanggal Terbit</th>
+                        <th class="px-5 py-4 font-semibold text-slate-800 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @forelse($certificates as $cert)
+                        <tr class="transition-colors hover:bg-slate-50/70 group">
+                            <td class="px-5 py-4 font-medium text-slate-900 group-hover:text-blue-700">{{ $cert->pesertaProfile->user->name }}</td>
+                            <td class="px-5 py-4 text-slate-600 font-mono">{{ $cert->pesertaProfile->nim }}</td>
+                            <td class="px-5 py-4 text-slate-500 tabular-nums">{{ $cert->created_at->format('d/m/Y H:i') }}</td>
+                            <td class="px-5 py-4 text-center">
+                                <a href="{{ route('admin.sertifikat.download', $cert->id) }}" class="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                    Unduh
+                                </a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="px-5 py-12 text-center text-slate-500">
+                                <div class="flex flex-col items-center justify-center">
+                                    <svg class="h-10 w-10 text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    Belum ada sertifikat yang diterbitkan.
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')

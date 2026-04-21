@@ -60,7 +60,7 @@
             position: relative;
             z-index: 1;
         }
-        .brand-badge img { height: 44px; width: auto; filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+        .brand-badge img { height: 44px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
 
         .left-quote {
             position: relative; z-index: 1;

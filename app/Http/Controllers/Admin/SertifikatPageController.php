@@ -20,6 +20,11 @@ class SertifikatPageController extends Controller
             ->orderBy('nim')
             ->get();
 
-        return view('admin.sertifikat', compact('pembimbingList', 'pesertaList'));
+        $certificates = \App\Models\Certificate::query()
+            ->with('pesertaProfile.user')
+            ->latest()
+            ->get();
+
+        return view('admin.sertifikat', compact('pembimbingList', 'pesertaList', 'certificates'));
     }
 }
