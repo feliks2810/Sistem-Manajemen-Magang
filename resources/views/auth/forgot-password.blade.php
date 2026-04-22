@@ -117,14 +117,14 @@
         <p class="subtitle">Masukkan email Anda dan kami akan membantu Anda mengatur ulang password.</p>
 
         {{-- Success info --}}
-        @if(session('reset_info'))
+        @if(session('success') || session('status'))
             <div class="alert alert-success">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 <div>
                     <p style="margin:0;font-weight:700;">Permintaan Dikirim</p>
-                    <p style="margin:4px 0 0;opacity:0.85;">{{ session('reset_info')['message'] }}</p>
+                    <p style="margin:4px 0 0;opacity:0.85;">{{ session('success') ?? session('status') }}</p>
                 </div>
             </div>
         @endif
