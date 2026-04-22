@@ -76,4 +76,24 @@ class ProfileController extends Controller
 
         return redirect()->route('peserta.profile')->with('success', $message);
     }
+
+    public function destroyDocument(Document $document): RedirectResponse
+    {
+        $profile = Auth::user()->pesertaProfile;
+
+        // Verify the document belongs to the logged-in user
+        if ($document->peserta_profile_id !== $profile?->id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Delete from storage
+        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($document->path)) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($document->path);
+        }
+
+        // Delete record
+        $document->delete();
+
+        return redirect()->route('peserta.profile')->with('success', 'Dokumen berhasil dihapus.');
+    }
 }

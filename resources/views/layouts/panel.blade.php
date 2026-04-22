@@ -15,9 +15,9 @@
         @media (min-width: 768px) {
             .desktop-pl-64 { padding-left: 16rem; }
         }
-        .active-menu-ivory {
-            background-color: #FFFFF0 !important;
-            color: black !important;
+        .active-menu-blue {
+            background-color: rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
         }
     </style>
 
@@ -29,7 +29,7 @@
         {{-- Header Sidebar (Sejajar dengan Navbar h-16) --}}
         <div class="flex h-16 w-full items-center justify-between border-b border-white/20 px-4 shrink-0">
             <a href="{{ $panelHome ?? route('admin.dashboard') }}" class="flex items-center gap-2 overflow-hidden mr-2">
-                <span class="truncate font-bold tracking-widest text-black uppercase text-[11px]">SISTEM MAGANG</span>
+                <span class="truncate text-sm font-medium text-white">Sistem Magang</span>
             </a>
 
 
@@ -51,8 +51,8 @@
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                 </div>
             @endif
-            <span class="text-center text-sm font-bold tracking-tight text-black w-full truncate px-2">{{ auth()->user()->name }}</span>
-            <span class="mt-0.5 text-center text-[10px] font-semibold uppercase tracking-wider text-black/80">
+            <span class="text-center text-sm font-bold tracking-tight text-white w-full truncate px-2">{{ auth()->user()->name }}</span>
+            <span class="mt-0.5 text-center text-sm font-medium text-white/80">
                 @if(auth()->user()->isAdmin()) Admin
                 @elseif(auth()->user()->isPembimbing()) Pembimbing
                 @else Peserta magang
@@ -69,7 +69,7 @@
         <div class="p-4 shrink-0 border-t border-white/10">
             <form action="{{ route('logout') }}" method="post">
                 @csrf
-                <button type="submit" class="flex w-full items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 text-sm font-semibold text-black transition hover:border-white/40 hover:bg-white/20">
+                <button type="submit" class="flex w-full items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/20">
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                     Logout
                 </button>

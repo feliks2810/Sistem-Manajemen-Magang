@@ -50,7 +50,7 @@ class AttendanceController extends Controller
             return [
                 'ok'       => false,
                 'distance' => round($distance),
-                'message'  => 'Anda berada ' . round($distance) . ' meter dari lokasi kantor. Batas radius adalah ' . $radius . ' meter.',
+                'message'  => 'Absensi tidak dapat dilakukan karena Anda berada di luar area yang ditentukan (RS Awal Bros Botania)',
             ];
         }
 

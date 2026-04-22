@@ -77,6 +77,7 @@ Route::middleware(['auth', 'role:pembimbing'])->prefix('pembimbing')->name('pemb
     Route::get('/penilaian/{peserta}/edit', [PembimbingEvaluationController::class, 'edit'])->name('evaluation.edit');
     Route::put('/penilaian/{peserta}', [PembimbingEvaluationController::class, 'update'])->name('evaluation.update');
 
+    Route::get('/kalender', [\App\Http\Controllers\Pembimbing\AttendanceCalendarController::class, 'index'])->name('calendar.index');
 });
 
 Route::middleware(['auth', 'role:peserta'])->prefix('peserta')->name('peserta.')->group(function (): void {
@@ -84,6 +85,7 @@ Route::middleware(['auth', 'role:peserta'])->prefix('peserta')->name('peserta.')
 
     Route::get('/profil', [PesertaProfileController::class, 'edit'])->name('profile');
     Route::put('/profil', [PesertaProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profil/dokumen/{document}', [PesertaProfileController::class, 'destroyDocument'])->name('profile.document.destroy');
 
     Route::post('/absensi/check-in', [PesertaAttendanceController::class, 'checkIn'])->name('absensi.checkin');
     Route::post('/absensi/check-out', [PesertaAttendanceController::class, 'checkOut'])->name('absensi.checkout');

@@ -39,7 +39,7 @@
     </div>
 
 @elseif($certificate)
-    <div class="max-w-2xl space-y-4">
+    <div class="max-w-2xl mx-auto space-y-4">
 
         {{-- Main Certificate Card --}}
         <div class="rounded-[14px] border border-slate-200 bg-white p-8 shadow-sm">

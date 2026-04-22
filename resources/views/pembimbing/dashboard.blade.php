@@ -14,7 +14,7 @@
             + Tambah Penilaian
         </a>
         <a href="{{ route('pembimbing.leaves.index') }}" class="inline-flex shrink-0 items-center justify-center rounded-[10px] border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 transition">
-            Review Izin
+            Verifikasi Izin
         </a>
     </div>
 </div>
@@ -106,7 +106,8 @@
                     <tr class="border-b border-slate-100 bg-slate-50/70 text-xs font-semibold uppercase tracking-wide text-slate-500">
                         <th class="px-6 py-4">Nama Peserta</th>
                         <th class="px-6 py-4">Status</th>
-                        <th class="px-6 py-4">Progress (%)</th>
+                        <th class="px-6 py-4">Hadir Hari Ini</th>
+                        <th class="px-6 py-4">Kehadiran</th>
                         <th class="px-6 py-4 text-right">Aksi</th>
                     </tr>
                 </thead>
@@ -133,6 +134,21 @@
                                     <span class="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-600/20">Aktif</span>
                                 @else
                                     <span class="inline-flex rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700 ring-1 ring-inset ring-slate-500/10">Selesai</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 text-slate-600">
+                                @if($p->today_status === 'hadir')
+                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Hadir
+                                    </span>
+                                @elseif(in_array($p->today_status, ['izin', 'sakit']))
+                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700 ring-1 ring-inset ring-amber-600/20">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span> {{ ucfirst($p->today_status) }}
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700 ring-1 ring-inset ring-slate-500/10">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-slate-400"></span> {{ ucfirst($p->today_status) }}
+                                    </span>
                                 @endif
                             </td>
                             <td class="px-6 py-4">
@@ -184,6 +200,8 @@
         </div>
     </div>
 </div>
+
+
 @endsection
 
 @push('scripts')

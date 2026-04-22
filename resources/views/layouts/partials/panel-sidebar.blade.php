@@ -1,8 +1,8 @@
 @php
     $is = fn (string $name) => request()->routeIs($name);
     $u = auth()->user();
-    $activeClass = 'border-l-4 border-white active-menu-ivory font-bold shadow-sm';
-    $inactiveClass = 'border-l-4 border-transparent text-black font-medium hover:bg-white/10 hover:text-white transition-all duration-200';
+    $activeClass = 'border-l-4 border-white active-menu-blue font-bold shadow-sm';
+    $inactiveClass = 'border-l-4 border-transparent text-white/90 font-medium hover:bg-white/10 hover:text-white transition-all duration-200';
 @endphp
 
 @if($u->isAdmin())
@@ -43,6 +43,10 @@
     <a href="{{ route('pembimbing.dashboard') }}" class="flex items-center gap-3 px-5 py-3.5 text-sm {{ $is('pembimbing.dashboard') ? $activeClass : $inactiveClass }}">
         <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
         Dashboard
+    </a>
+    <a href="{{ route('pembimbing.calendar.index') }}" class="flex items-center gap-3 px-5 py-3.5 text-sm {{ $is('pembimbing.calendar.*') ? $activeClass : $inactiveClass }}">
+        <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Kalender Absensi
     </a>
     <a href="{{ route('pembimbing.leaves.index') }}" class="flex items-center gap-3 px-5 py-3.5 text-sm {{ $is('pembimbing.leaves.*') ? $activeClass : $inactiveClass }}">
         <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>

@@ -25,10 +25,21 @@ class DashboardController extends Controller
         $belumDinilaiCount = $peserta->filter(fn ($p) => ! $p->latestEvaluation?->is_final)->count();
         $rataRataNilai = $peserta->filter(fn ($p) => $p->latestEvaluation?->is_final)->avg(fn ($p) => $p->latestEvaluation->total_nilai) ?? 0;
 
-        $peserta->each(function ($p) use ($stats) {
+        $today = now()->toDateString();
+
+        $peserta->each(function ($p) use ($stats, $today) {
             $p->is_active = now()->between($p->periode_mulai, $p->periode_selesai);
             $p->progress_percent = $stats->attendancePercent($p);
             $p->is_dinilai = $p->latestEvaluation?->is_final;
+
+            // Fetch attendances for today
+            $atts = Attendance::query()
+                ->where('peserta_profile_id', $p->id)
+                ->whereDate('tanggal', $today)
+                ->first();
+
+            // Set today's status
+            $p->today_status = $atts ? $atts->status : 'belum';
         });
 
         $pendingLeaves = LeaveRequest::query()
