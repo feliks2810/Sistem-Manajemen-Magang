@@ -25,6 +25,12 @@ class PesertaController extends Controller
         return view('admin.peserta.index', compact('peserta'));
     }
 
+    public function show(PesertaProfile $peserta): View
+    {
+        $peserta->load(['user', 'pembimbing.user', 'documents']);
+        return view('admin.peserta.show', compact('peserta'));
+    }
+
     public function create(): View
     {
         $pembimbing = PembimbingProfile::query()->with('user')->orderBy('id')->get();
@@ -55,7 +61,7 @@ class PesertaController extends Controller
                 'email' => $data['email'],
                 'password' => $data['password'],
                 'role' => User::ROLE_PESERTA,
-                'avatar' => $avatarPath,
+                'avatar_path' => $avatarPath,
             ]);
 
             PesertaProfile::query()->create([
@@ -90,7 +96,7 @@ class PesertaController extends Controller
             'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
 
-        $avatarPath = $peserta->user->avatar;
+        $avatarPath = $peserta->user->avatar_path;
         if ($request->hasFile('avatar')) {
             if ($avatarPath) {
                 Storage::disk('public')->delete($avatarPath);
@@ -102,7 +108,7 @@ class PesertaController extends Controller
             $u = [
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'avatar' => $avatarPath,
+                'avatar_path' => $avatarPath,
             ];
             if (! empty($data['password'])) {
                 $u['password'] = $data['password'];

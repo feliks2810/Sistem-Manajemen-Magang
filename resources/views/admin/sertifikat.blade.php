@@ -4,7 +4,7 @@
 @section('page_title', '')
 
 @section('content')
-<div class="max-w-2xl mt-4">
+<div class="mt-4">
     <div class="rounded-[14px] border border-slate-200/80 bg-white shadow-sm transition-all duration-200">
         {{-- Card Header Hierarchy --}}
         <div class="border-b border-slate-100 px-8 py-6">

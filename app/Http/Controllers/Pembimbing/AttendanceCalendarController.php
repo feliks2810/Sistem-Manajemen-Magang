@@ -59,10 +59,15 @@ class AttendanceCalendarController extends Controller
             'total' => $pesertaList->count()
         ];
 
-        // Overall summary per student (all time)
+        // Overall summary per student for the selected month
         if ($profile) {
+            $month = $selectedDate->month;
+            $year = $selectedDate->year;
+
             $allAttendances = Attendance::query()
                 ->whereIn('peserta_profile_id', $pesertaList->pluck('id'))
+                ->whereMonth('tanggal', $month)
+                ->whereYear('tanggal', $year)
                 ->get()
                 ->groupBy('peserta_profile_id');
 

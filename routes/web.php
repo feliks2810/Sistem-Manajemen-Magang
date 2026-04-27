@@ -48,6 +48,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::get('peserta', [AdminPesertaController::class, 'index'])->name('peserta.index');
     Route::get('peserta/create', [AdminPesertaController::class, 'create'])->name('peserta.create');
+    Route::get('peserta/{peserta}', [AdminPesertaController::class, 'show'])->name('peserta.show');
     Route::post('peserta', [AdminPesertaController::class, 'store'])->name('peserta.store');
     Route::get('peserta/{peserta}/edit', [AdminPesertaController::class, 'edit'])->name('peserta.edit');
     Route::put('peserta/{peserta}', [AdminPesertaController::class, 'update'])->name('peserta.update');
@@ -76,6 +77,9 @@ Route::middleware(['auth', 'role:pembimbing'])->prefix('pembimbing')->name('pemb
     Route::get('/penilaian', [PembimbingEvaluationController::class, 'index'])->name('evaluation.index');
     Route::get('/penilaian/{peserta}/edit', [PembimbingEvaluationController::class, 'edit'])->name('evaluation.edit');
     Route::put('/penilaian/{peserta}', [PembimbingEvaluationController::class, 'update'])->name('evaluation.update');
+
+    Route::get('/peserta', [\App\Http\Controllers\Pembimbing\PesertaController::class, 'index'])->name('peserta.index');
+    Route::get('/peserta/{peserta}', [\App\Http\Controllers\Pembimbing\PesertaController::class, 'show'])->name('peserta.show');
 
     Route::get('/kalender', [\App\Http\Controllers\Pembimbing\AttendanceCalendarController::class, 'index'])->name('calendar.index');
 });

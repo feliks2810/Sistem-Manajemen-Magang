@@ -9,10 +9,6 @@
         <h1 class="text-2xl font-bold tracking-tight text-slate-900">Monitoring Penilaian</h1>
         <p class="mt-1 text-sm text-slate-500">Tinjau seluruh hasil evaluasi & penilaian kinerja peserta magang.</p>
     </div>
-    <a href="{{ route('admin.penilaian.export', request()->query()) }}" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 hover:shadow focus:outline-none focus:ring-4 focus:ring-slate-200">
-        <svg class="h-4 w-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-        Export CSV
-    </a>
 </div>
 
 <div class="mb-6 rounded-[14px] bg-white p-5 shadow-sm border border-slate-200/80">

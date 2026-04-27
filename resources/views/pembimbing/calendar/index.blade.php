@@ -55,8 +55,8 @@
                         <tr class="hover:bg-slate-50/50 transition-colors group">
                             <td class="px-5 py-4">
                                 <div class="flex items-center gap-3">
-                                    @if($p->user->avatar)
-                                        <img src="{{ Storage::url($p->user->avatar) }}" alt="Avatar" class="h-8 w-8 rounded-full object-cover border border-slate-200 shadow-sm">
+                                    @if($p->user->avatar_path)
+                                        <img src="{{ Storage::url($p->user->avatar_path) }}" alt="Avatar" class="h-8 w-8 rounded-full object-cover border border-slate-200 shadow-sm">
                                     @else
                                         <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-xs font-bold tracking-wider text-blue-700 shadow-sm ring-1 ring-white">
                                             {{ strtoupper(substr($p->user->name, 0, 1)) }}
@@ -103,8 +103,8 @@
 {{-- Rekapitulasi Absensi Keseluruhan --}}
 <div class="mt-8 rounded-[14px] border border-slate-200/80 bg-white shadow-sm overflow-hidden">
     <div class="border-b border-slate-100 bg-white px-6 py-5">
-        <h2 class="text-lg font-bold text-slate-800">Rekapitulasi Absensi Peserta</h2>
-        <p class="mt-0.5 text-xs text-slate-500">Akumulasi seluruh data kehadiran peserta bimbingan Anda.</p>
+        <h2 class="text-lg font-bold text-slate-800">Rekapitulasi Bulanan ({{ $selectedDate->translatedFormat('F Y') }})</h2>
+        <p class="mt-0.5 text-xs text-slate-500">Akumulasi data kehadiran peserta bimbingan untuk bulan {{ $selectedDate->translatedFormat('F Y') }}.</p>
     </div>
     <div class="overflow-x-auto">
         <table class="min-w-full text-left text-sm whitespace-nowrap">
@@ -123,8 +123,8 @@
                     <tr class="hover:bg-slate-50/50 transition-colors">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
-                                @if($p->user->avatar)
-                                    <img src="{{ Storage::url($p->user->avatar) }}" alt="Avatar" class="h-9 w-9 rounded-full object-cover border border-slate-200 shadow-sm">
+                                @if($p->user->avatar_path)
+                                    <img src="{{ Storage::url($p->user->avatar_path) }}" alt="Avatar" class="h-9 w-9 rounded-full object-cover border border-slate-200 shadow-sm">
                                 @else
                                     <div class="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-xs font-bold tracking-wider text-blue-700 shadow-sm ring-1 ring-white">
                                         {{ strtoupper(substr($p->user->name, 0, 1)) }}

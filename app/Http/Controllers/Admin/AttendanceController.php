@@ -30,6 +30,14 @@ class AttendanceController extends Controller
 
         $rows = $q->paginate(30)->withQueryString();
         
+        // Summary recap for the current filtered list
+        $summary = [
+            'hadir' => (clone $q)->where('status', 'hadir')->count(),
+            'izin' => (clone $q)->where('status', 'izin')->count(),
+            'sakit' => (clone $q)->where('status', 'sakit')->count(),
+            'alpha' => (clone $q)->where('status', 'alpha')->count(),
+        ];
+        
         $pesertaListQuery = PesertaProfile::query()->with(['user', 'pembimbing'])->orderBy('nim');
         if ($pembimbingId) {
             $pesertaListQuery->where('pembimbing_id', $pembimbingId);
@@ -38,6 +46,6 @@ class AttendanceController extends Controller
         
         $pembimbingList = \App\Models\PembimbingProfile::query()->with('user')->orderBy('id')->get();
 
-        return view('admin.attendance.index', compact('rows', 'pesertaList', 'pesertaId', 'pembimbingList', 'pembimbingId'));
+        return view('admin.attendance.index', compact('rows', 'pesertaList', 'pesertaId', 'pembimbingList', 'pembimbingId', 'summary'));
     }
 }
