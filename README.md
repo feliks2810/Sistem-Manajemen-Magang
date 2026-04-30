@@ -208,7 +208,3 @@ sistem-magang/
 → Pastikan PHP ada di PATH, atau gunakan path penuh: `C:\xampp\php\php.exe artisan migrate --seed`
 
 ---
-
-## 📝 Lisensi
-
-Proyek ini dibuat untuk keperluan Tugas Akhir. Hak cipta © 2026.
