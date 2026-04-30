@@ -1,59 +1,214 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎓 Sistem Manajemen Magang
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi web berbasis Laravel untuk mengelola program magang, mencakup manajemen peserta, pembimbing, absensi, evaluasi, surat izin, dan sertifikat.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ⚙️ Teknologi
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Stack | Versi |
+|---|---|
+| PHP | >= 8.2 |
+| Laravel | 11.x |
+| Database | MySQL |
+| Web Server | Apache (XAMPP) |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Panduan Instalasi (Fresh Clone dari GitHub)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Prasyarat
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Pastikan kamu sudah menginstal:
+- [XAMPP](https://www.apachefriends.org/) (dengan Apache & MySQL aktif)
+- [Composer](https://getcomposer.org/)
+- [Node.js & NPM](https://nodejs.org/)
+- [Git](https://git-scm.com/)
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Langkah 1 — Clone Repository
 
-### Premium Partners
+```bash
+git clone https://github.com/feliks2810/Sistem-Manajemen-Magang.git
+cd Sistem-Manajemen-Magang
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Atau jika menggunakan XAMPP, clone langsung ke folder `htdocs`:
 
-## Contributing
+```bash
+cd C:\xampp\htdocs
+git clone https://github.com/feliks2810/Sistem-Manajemen-Magang.git sistem-magang
+cd sistem-magang
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+### Langkah 2 — Install Dependensi
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+composer install
+npm install
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Langkah 3 — Buat File `.env`
 
-## License
+Salin file konfigurasi contoh:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+cp .env.example .env
+```
+
+Kemudian generate application key:
+
+```bash
+php artisan key:generate
+```
+
+---
+
+### Langkah 4 — Konfigurasi Database MySQL
+
+Buka file `.env` dan sesuaikan bagian database:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=sistem_magang
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+> **⚠️ Catatan Port XAMPP:**
+> Jika MySQL XAMPP kamu berjalan di port selain `3306` (misalnya `3309`),
+> sesuaikan nilai `DB_PORT` dengan port yang aktif di XAMPP Control Panel.
+
+---
+
+### Langkah 5 — Buat Database
+
+Buka **phpMyAdmin** (`http://localhost/phpmyadmin`) lalu buat database baru:
+
+```sql
+CREATE DATABASE sistem_magang CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+**Atau** lewat terminal (sesuaikan path XAMPP kamu):
+
+```bash
+# Windows - XAMPP default port 3306
+C:\xampp\mysql\bin\mysql.exe -u root -e "CREATE DATABASE sistem_magang CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+# Windows - XAMPP port 3309
+C:\xampp\mysql\bin\mysql.exe -u root -P 3309 --protocol=TCP -e "CREATE DATABASE sistem_magang CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+```
+
+---
+
+### Langkah 6 — Jalankan Migrasi & Seeder
+
+```bash
+php artisan migrate --seed
+```
+
+Perintah ini akan:
+- Membuat semua tabel di database
+- Mengisi data awal (rubrik penilaian & akun admin)
+
+---
+
+### Langkah 7 — Build Asset Frontend
+
+```bash
+npm run dev
+```
+
+Atau untuk production:
+
+```bash
+npm run build
+```
+
+---
+
+### Langkah 8 — Jalankan Aplikasi
+
+Pastikan **Apache** dan **MySQL** sudah aktif di XAMPP, lalu buka browser:
+
+```
+http://localhost/sistem-magang/public
+```
+
+---
+
+## 🔑 Akun Default
+
+Setelah seeder berjalan, gunakan akun berikut untuk login:
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | `admin@admin.com` | `password` |
+
+---
+
+## 📁 Struktur Direktori Penting
+
+```
+sistem-magang/
+├── app/
+│   ├── Http/Controllers/    # Controller (Admin, Pembimbing, Peserta)
+│   ├── Models/              # Eloquent Models
+│   └── Services/            # Business logic services
+├── database/
+│   ├── migrations/          # Skema tabel database
+│   └── seeders/             # Data awal (admin, rubrik)
+├── resources/views/         # Template Blade
+├── routes/web.php           # Definisi routing
+└── public/                  # Asset publik
+```
+
+---
+
+## 🗄️ Struktur Database
+
+| Tabel | Keterangan |
+|---|---|
+| `users` | Akun pengguna (admin, pembimbing, peserta) |
+| `peserta_profiles` | Profil lengkap peserta magang |
+| `pembimbing_profiles` | Profil pembimbing |
+| `attendances` | Data absensi harian |
+| `leave_requests` | Pengajuan surat izin |
+| `evaluations` | Evaluasi peserta oleh pembimbing |
+| `rubrics` | Kriteria penilaian evaluasi |
+| `evaluation_rubric_scores` | Nilai per kriteria |
+| `certificates` | Sertifikat magang |
+| `documents` | Dokumen pendukung |
+| `settings` | Konfigurasi sistem |
+
+---
+
+## 🛠️ Troubleshooting
+
+### ❌ Error: `SQLSTATE[HY000] [2002] Connection refused`
+→ Pastikan MySQL sudah aktif di XAMPP Control Panel.
+
+### ❌ Error: `Access denied for user 'root'@'localhost'`
+→ Periksa `DB_USERNAME` dan `DB_PASSWORD` di file `.env`.
+
+### ❌ Error: `No such file or directory` (SQLite)
+→ Pastikan `DB_CONNECTION=mysql` di `.env`, bukan `sqlite`.
+
+### ❌ Port sudah dipakai (port 3306)
+→ Lihat port MySQL aktif di XAMPP Control Panel, lalu update `DB_PORT` di `.env`.
+
+### ❌ `php artisan` tidak dikenali
+→ Pastikan PHP ada di PATH, atau gunakan path penuh: `C:\xampp\php\php.exe artisan migrate --seed`
+
+---
+
+## 📝 Lisensi
+
+Proyek ini dibuat untuk keperluan Tugas Akhir. Hak cipta © 2026.
