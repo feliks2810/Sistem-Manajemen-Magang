@@ -17,8 +17,8 @@
         {{-- Header Info --}}
         <div class="flex items-start justify-between border-b border-slate-100 pb-6 mb-6">
             <div class="flex items-center gap-4">
-                @if($leave->pesertaProfile->user->avatar)
-                    <img src="{{ Storage::url($leave->pesertaProfile->user->avatar) }}" alt="Avatar" class="h-16 w-16 rounded-full object-cover border border-slate-200 shadow-sm ring-4 ring-slate-50">
+                @if($leave->pesertaProfile->user->avatar_path)
+                    <img src="{{ Storage::url($leave->pesertaProfile->user->avatar_path) }}" alt="Avatar" class="h-16 w-16 rounded-full object-cover border border-slate-200 shadow-sm ring-4 ring-slate-50">
                 @else
                     <div class="flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-xl font-bold tracking-wider text-blue-700 shadow-sm ring-4 ring-white">
                         {{ strtoupper(substr($leave->pesertaProfile->user->name, 0, 1)) }}

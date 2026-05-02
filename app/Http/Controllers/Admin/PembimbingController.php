@@ -52,7 +52,7 @@ class PembimbingController extends Controller
                 'email' => $data['email'],
                 'password' => $data['password'],
                 'role' => User::ROLE_PEMBIMBING,
-                'avatar' => $avatarPath,
+                'avatar_path' => $avatarPath,
             ]);
 
             PembimbingProfile::query()->create([
@@ -83,7 +83,7 @@ class PembimbingController extends Controller
             'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
 
-        $avatarPath = $pembimbing->user->avatar;
+        $avatarPath = $pembimbing->user->avatar_path;
         if ($request->hasFile('avatar')) {
             if ($avatarPath) {
                 Storage::disk('public')->delete($avatarPath);
@@ -95,7 +95,7 @@ class PembimbingController extends Controller
             $u = [
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'avatar' => $avatarPath,
+                'avatar_path' => $avatarPath,
             ];
             if (! empty($data['password'])) {
                 $u['password'] = $data['password'];
