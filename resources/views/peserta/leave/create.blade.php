@@ -12,7 +12,7 @@
 
 </div>
 
-<div class="rounded-[14px] border border-slate-200 bg-white p-6 shadow-sm md:p-8 max-w-2xl transition-all hover:shadow-md hover:border-slate-300">
+<div class="rounded-[14px] border border-slate-200 bg-white p-6 shadow-sm md:p-8 transition-all hover:shadow-md hover:border-slate-300">
     <form action="{{ route('peserta.leave.store') }}" method="post" enctype="multipart/form-data" class="space-y-6">
         @csrf
 
@@ -104,7 +104,7 @@
 </div>
 
 {{-- Riwayat Izin/Sakit --}}
-<div class="mt-8 rounded-[14px] border border-slate-200 bg-white shadow-sm md:p-8 p-6 max-w-2xl">
+<div class="mt-8 rounded-[14px] border border-slate-200 bg-white shadow-sm md:p-8 p-6">
     <h3 class="mb-4 text-lg font-bold text-slate-800">Riwayat Pengajuan</h3>
     <div class="space-y-4">
         @forelse($history as $item)

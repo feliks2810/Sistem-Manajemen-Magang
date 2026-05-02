@@ -17,9 +17,17 @@ class AttendanceCalendarController extends Controller
         $profile = Auth::user()->pembimbingProfile;
         
         // Determine the selected date (default is today)
-        $selectedDateString = $request->input('date', date('Y-m-d'));
+        $selectedDateString = $request->input('date');
+        $monthYearString = $request->input('month_year');
+        
         try {
-            $selectedDate = Carbon::createFromFormat('Y-m-d', $selectedDateString);
+            if ($selectedDateString) {
+                $selectedDate = Carbon::createFromFormat('Y-m-d', $selectedDateString);
+            } elseif ($monthYearString) {
+                $selectedDate = Carbon::createFromFormat('Y-m', $monthYearString)->startOfMonth();
+            } else {
+                $selectedDate = Carbon::today();
+            }
         } catch (\Exception $e) {
             $selectedDate = Carbon::today();
         }

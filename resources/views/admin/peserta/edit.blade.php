@@ -9,7 +9,7 @@
     <a href="{{ route('admin.peserta.index') }}" class="text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">← Kembali ke daftar</a>
 </div>
 
-<div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8 max-w-2xl">
+<div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
     <form action="{{ route('admin.peserta.update', $peserta) }}" method="post" enctype="multipart/form-data" class="space-y-6">
         @csrf @method('PUT')
         

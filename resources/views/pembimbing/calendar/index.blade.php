@@ -102,9 +102,15 @@
 
 {{-- Rekapitulasi Absensi Keseluruhan --}}
 <div class="mt-8 rounded-[14px] border border-slate-200/80 bg-white shadow-sm overflow-hidden">
-    <div class="border-b border-slate-100 bg-white px-6 py-5">
-        <h2 class="text-lg font-bold text-slate-800">Rekapitulasi Bulanan ({{ $selectedDate->translatedFormat('F Y') }})</h2>
-        <p class="mt-0.5 text-xs text-slate-500">Akumulasi data kehadiran peserta bimbingan untuk bulan {{ $selectedDate->translatedFormat('F Y') }}.</p>
+    <div class="border-b border-slate-100 bg-white px-6 py-5 flex flex-wrap gap-4 justify-between items-center">
+        <div>
+            <h2 class="text-lg font-bold text-slate-800">Rekapitulasi Bulanan ({{ $selectedDate->translatedFormat('F Y') }})</h2>
+            <p class="mt-0.5 text-xs text-slate-500">Akumulasi data kehadiran peserta bimbingan untuk bulan {{ $selectedDate->translatedFormat('F Y') }}.</p>
+        </div>
+        <form action="{{ route('pembimbing.calendar.index') }}" method="get" class="flex items-center gap-2">
+            <input type="month" name="month_year" value="{{ $selectedDate->format('Y-m') }}" class="rounded-lg border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" onchange="this.form.submit()">
+            <noscript><button type="submit" class="rounded-lg bg-blue-600 px-3 py-2 text-sm text-white">Filter</button></noscript>
+        </form>
     </div>
     <div class="overflow-x-auto">
         <table class="min-w-full text-left text-sm whitespace-nowrap">
