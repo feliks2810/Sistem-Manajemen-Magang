@@ -179,7 +179,7 @@
                     @if($profile->pembimbing)
                         <div class="flex items-center gap-4">
                             @if($profile->pembimbing->user->avatar_path)
-                                <img src="{{ Storage::url($profile->pembimbing->user->avatar_path) }}" alt="Avatar Pembimbing" class="h-14 w-14 shrink-0 rounded-full object-cover border border-slate-200 shadow-sm ring-2 ring-slate-50">
+                                <img src="{{ route('storage.file', $profile->pembimbing->user->avatar_path) }}" alt="Avatar Pembimbing" class="h-14 w-14 shrink-0 rounded-full object-cover border border-slate-200 shadow-sm ring-2 ring-slate-50">
                             @else
                                 <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-100 to-blue-100 text-xl font-bold text-indigo-700 ring-2 ring-white shadow-sm">
                                     {{ strtoupper(substr($profile->pembimbing->user->name, 0, 1)) }}

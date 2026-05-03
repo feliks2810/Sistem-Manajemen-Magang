@@ -25,6 +25,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 
+// Route untuk serve file storage melalui Laravel (mengatasi forbidden di XAMPP)
+Route::get('/berkas/{path}', function (string $path) {
+    $disk = \Illuminate\Support\Facades\Storage::disk('public');
+    
+    if (! $disk->exists($path)) {
+        abort(404, 'File tidak ditemukan.');
+    }
+    
+    $pathOnDisk = $disk->path($path);
+    
+    return response()->file($pathOnDisk, [
+        'Content-Disposition' => 'inline; filename="' . basename($path) . '"'
+    ]);
+})->where('path', '.*')->middleware('auth')->name('storage.file');
+
 Route::get('/lang/{lang}', function ($lang) {
     if (in_array($lang, ['id', 'en'])) {
         session(['locale' => $lang]);

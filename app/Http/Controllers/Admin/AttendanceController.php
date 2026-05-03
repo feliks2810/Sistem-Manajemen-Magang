@@ -35,7 +35,7 @@ class AttendanceController extends Controller
             'hadir' => (clone $q)->where('status', 'hadir')->count(),
             'izin' => (clone $q)->where('status', 'izin')->count(),
             'sakit' => (clone $q)->where('status', 'sakit')->count(),
-            'alpha' => (clone $q)->where('status', 'alpha')->count(),
+            'alpha' => (clone $q)->where('status', 'alpa')->count(),
         ];
         
         $pesertaListQuery = PesertaProfile::query()->with(['user', 'pembimbing'])->orderBy('nim');

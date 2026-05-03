@@ -36,9 +36,10 @@ class DashboardController extends Controller
             ->where('status', 'pending')
             ->get();
             
-        // Check Izin Hari Ini (Approved or Pending)
+        // Check Izin Hari Ini (hanya yang sudah Approved)
         $leaveToday = LeaveRequest::query()
             ->where('peserta_profile_id', $profile->id)
+            ->where('status', 'approved')
             ->whereDate('tanggal_mulai', '<=', $today)
             ->whereDate('tanggal_selesai', '>=', $today)
             ->first();

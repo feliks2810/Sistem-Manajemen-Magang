@@ -19,7 +19,7 @@
             <div class="relative h-24 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
             <div class="relative -mt-12 flex flex-col items-center px-6 pb-8">
                 @if($peserta->user->avatar_path)
-                    <img src="{{ Storage::url($peserta->user->avatar_path) }}" alt="Avatar" class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg">
+                    <img src="{{ route('storage.file', $peserta->user->avatar_path) }}" alt="Avatar" class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg">
                 @else
                     <div class="flex h-24 w-24 items-center justify-center rounded-full border-4 border-white bg-blue-100 text-2xl font-bold text-blue-600 shadow-lg">
                         {{ strtoupper(substr($peserta->user->name, 0, 1)) }}
@@ -113,7 +113,7 @@
                                 <p class="text-xs text-slate-500">Diupload pada {{ $doc->created_at->format('d/m/Y H:i') }}</p>
                             </div>
                         </div>
-                        <a href="{{ Storage::url($doc->path) }}" target="_blank" class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-all shadow-sm">
+                        <a href="{{ route('storage.file', $doc->path) }}" target="_blank" class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-all shadow-sm">
                             Buka / Download
                         </a>
                     </div>

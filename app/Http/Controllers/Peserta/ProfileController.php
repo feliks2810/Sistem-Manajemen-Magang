@@ -33,9 +33,22 @@ class ProfileController extends Controller
             'phone' => ['required', 'string', 'max:32'],
             'alamat' => ['required', 'string'],
             'avatar' => ['nullable', 'image', 'max:5120', 'mimes:jpg,jpeg,png'],
-            'dokumen' => ['nullable', 'file', 'max:5120', 'mimes:pdf,jpg,jpeg,png'],
+            'dokumen' => ['nullable', 'file', 'max:5120', 'mimes:pdf'],
             'nama_dokumen' => ['nullable', 'string', 'max:128'],
             'kategori_dokumen' => ['nullable', 'string', 'in:Surat Pengantar Magang,Surat Balasan Instansi,Lainnya'],
+        ], [
+            'nim.required'               => 'NIM/NIS wajib diisi.',
+            'nim.max'                    => 'NIM/NIS maksimal 32 karakter.',
+            'jurusan.required'           => 'Program studi wajib diisi.',
+            'institusi.required'         => 'Institusi/Kampus wajib diisi.',
+            'phone.required'             => 'Nomor telepon wajib diisi.',
+            'alamat.required'            => 'Alamat lengkap wajib diisi.',
+            'avatar.image'              => 'Foto profil harus berupa gambar.',
+            'avatar.mimes'              => 'Format foto hanya boleh JPG, JPEG, atau PNG.',
+            'avatar.max'                => 'Ukuran foto profil maksimal 5MB.',
+            'dokumen.file'              => 'File dokumen tidak valid.',
+            'dokumen.max'               => 'Ukuran dokumen terlalu besar. Maksimal 5MB.',
+            'dokumen.mimes'             => 'Dokumen hanya boleh berformat PDF.',
         ]);
 
         // 1. Update Peserta Profiles

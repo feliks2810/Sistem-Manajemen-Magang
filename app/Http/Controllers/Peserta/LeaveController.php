@@ -31,13 +31,25 @@ class LeaveController extends Controller
         }
 
         $data = $request->validate([
-            'tanggal_mulai' => ['required', 'date'],
+            'tanggal_mulai'   => ['required', 'date'],
             'tanggal_selesai' => ['required', 'date', 'after_or_equal:tanggal_mulai'],
-            'jenis' => ['required', 'in:izin,sakit'],
-            'alasan' => ['required', 'string', 'max:2000'],
-            'bukti' => ['nullable', 'required_if:jenis,sakit', 'file', 'max:5120', 'mimes:pdf,jpg,jpeg,png'],
+            'jenis'           => ['required', 'in:izin,sakit'],
+            'alasan'          => ['required', 'string', 'max:2000'],
+            'bukti'           => ['nullable', 'required_if:jenis,sakit', 'file', 'max:5120', 'mimes:pdf,jpg,jpeg,png'],
         ], [
-            'bukti.required_if' => 'Surat Sakit dari Dokter wajib dilampirkan jika memilih jenis Sakit.'
+            'tanggal_mulai.required'   => 'Tanggal mulai wajib diisi.',
+            'tanggal_mulai.date'       => 'Format tanggal mulai tidak valid.',
+            'tanggal_selesai.required' => 'Tanggal selesai wajib diisi.',
+            'tanggal_selesai.date'     => 'Format tanggal selesai tidak valid.',
+            'tanggal_selesai.after_or_equal' => 'Tanggal selesai tidak boleh sebelum tanggal mulai.',
+            'jenis.required'           => 'Jenis pengajuan wajib dipilih.',
+            'jenis.in'                 => 'Jenis pengajuan tidak valid.',
+            'alasan.required'          => 'Alasan/keterangan wajib diisi.',
+            'alasan.max'               => 'Alasan maksimal 2000 karakter.',
+            'bukti.required_if'        => 'Surat Sakit dari Dokter wajib dilampirkan jika memilih jenis Sakit.',
+            'bukti.file'               => 'File bukti tidak valid.',
+            'bukti.max'                => 'Ukuran file bukti terlalu besar. Maksimal 5MB.',
+            'bukti.mimes'              => 'Format file bukti hanya boleh PDF, JPG, atau PNG.',
         ]);
 
         $buktiPath = null;

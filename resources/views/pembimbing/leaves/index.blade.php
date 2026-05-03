@@ -29,7 +29,7 @@
                         <td class="px-5 py-4 font-medium text-slate-900 group-hover:text-blue-700">
                             <div class="flex items-center gap-3">
                                 @if($lr->pesertaProfile->user->avatar_path)
-                                    <img src="{{ Storage::url($lr->pesertaProfile->user->avatar_path) }}" alt="Avatar" class="h-8 w-8 rounded-full object-cover border border-slate-200 shadow-sm">
+                                    <img src="{{ route('storage.file', $lr->pesertaProfile->user->avatar_path) }}" alt="Avatar" class="h-8 w-8 rounded-full object-cover border border-slate-200 shadow-sm">
                                 @else
                                     <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-[11px] font-bold tracking-wider text-blue-700 shadow-sm ring-1 ring-white">
                                         {{ strtoupper(substr($lr->pesertaProfile->user->name, 0, 1)) }}

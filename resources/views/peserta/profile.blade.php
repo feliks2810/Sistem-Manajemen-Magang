@@ -36,15 +36,15 @@
             
             <div class="flex flex-col sm:flex-row items-center gap-6 border-b border-slate-100 pb-8">
                 <div id="avatar-wrapper" class="relative h-24 w-24 shrink-0">
-                    <div class="h-24 w-24 overflow-hidden rounded-full border-4 border-white shadow-md bg-slate-100 ring-1 ring-slate-200 transition-all">
+                    <div id="avatar-circle" class="h-24 w-24 overflow-hidden rounded-full border-4 border-white shadow-md bg-slate-100 ring-1 ring-slate-200 transition-all" style="position:relative;">
                         @if(auth()->user()->avatar_path)
-                            <img id="avatar-preview" src="{{ asset('storage/'.auth()->user()->avatar_path) }}" class="h-full w-full object-cover">
+                            <img id="avatar-current" src="{{ asset('storage/'.auth()->user()->avatar_path) }}" class="h-full w-full object-cover">
                         @else
                             <div id="avatar-initial" class="flex h-full w-full items-center justify-center text-3xl font-bold text-blue-300 bg-blue-50">
                                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                             </div>
-                            <img id="avatar-preview" src="" class="h-full w-full object-cover hidden">
                         @endif
+                        <img id="avatar-preview" src="" class="h-full w-full object-cover" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;">
                     </div>
                     {{-- Badge indikator baru dipilih --}}
                     <span id="avatar-badge" class="absolute -bottom-1 -right-1 hidden items-center justify-center rounded-full bg-emerald-500 text-white shadow-md" style="width:24px;height:24px;">
@@ -100,7 +100,7 @@
                     </div>
                     <div>
                         <h3 class="font-bold text-slate-800 text-lg">Upload Dokumen Magang</h3>
-                        <p class="text-sm text-slate-500">Unggah Surat Pengantar / Surat Balasan instansi jika belum ada.</p>
+                        <p class="text-sm text-slate-500">Unggah Surat Pengantar / Surat Balasan instansi (format <strong>PDF</strong> saja).</p>
                     </div>
                 </div>
 
@@ -120,8 +120,9 @@
                 </div>
                 
                 <div class="flex items-center gap-4 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4 transition-all focus-within:border-blue-500 focus-within:bg-white hover:border-slate-400">
-                    <input type="file" name="dokumen" accept=".pdf,.jpg,.jpeg,.png" class="w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-blue-100 file:px-4 file:py-2.5 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-200 transition-colors cursor-pointer">
+                    <input type="file" name="dokumen" accept=".pdf" class="w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-blue-100 file:px-4 file:py-2.5 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-200 transition-colors cursor-pointer">
                 </div>
+                <p class="mt-1.5 text-xs text-slate-400">Hanya file PDF · Maks. 5MB</p>
             </div>
 
             <div class="border-t border-slate-100 pt-6 mt-6 flex justify-end">
@@ -147,7 +148,7 @@
                             <h4 class="truncate text-sm font-bold text-slate-900 mb-0.5" title="{{ $d->nama }}">{{ $d->nama }}</h4>
                             <p class="text-xs text-slate-500 mb-2 truncate">Diupload: {{ $d->created_at->format('d/m/Y') }}</p>
                             <div class="flex items-center gap-3">
-                                <a href="{{ asset('storage/'.$d->path) }}" target="_blank" class="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+                                <a href="{{ route('storage.file', $d->path) }}" target="_blank" class="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors">
                                     Lihat Berkas <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                                 </a>
                                 <form action="{{ route('peserta.profile.document.destroy', $d) }}" method="post" onsubmit="return confirm('Apakah Anda yakin ingin menghapus dokumen ini?');">
@@ -189,13 +190,28 @@
         var badge = document.getElementById('avatar-badge');
         var filenameBox = document.getElementById('avatar-filename');
         var filenameText = document.getElementById('avatar-filename-text');
-        var wrapper = document.getElementById('avatar-wrapper');
+        var avatarCircle = document.getElementById('avatar-wrapper').querySelector('div');
 
         if (!input) return;
 
         input.addEventListener('change', function () {
             var file = this.files[0];
             if (!file) return;
+
+            // Validasi tipe file
+            var allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+            if (!allowedTypes.includes(file.type)) {
+                alert('Hanya file JPG, JPEG, atau PNG yang diperbolehkan.');
+                this.value = '';
+                return;
+            }
+
+            // Validasi ukuran (maks 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Ukuran file terlalu besar. Maksimum 5MB.');
+                this.value = '';
+                return;
+            }
 
             // Tampilkan nama file
             filenameText.textContent = file.name.length > 28 ? file.name.substring(0, 25) + '...' : file.name;
@@ -206,7 +222,8 @@
             reader.onload = function (e) {
                 if (initial) initial.style.display = 'none';
                 preview.src = e.target.result;
-                preview.classList.remove('hidden');
+                preview.style.display = 'block';
+                preview.style.position = '';
             };
             reader.readAsDataURL(file);
 
@@ -214,9 +231,8 @@
             badge.style.display = 'flex';
 
             // Hijaukan ring avatar
-            wrapper.querySelector('div').style.ringColor = '';
-            wrapper.querySelector('div').classList.remove('ring-slate-200');
-            wrapper.querySelector('div').classList.add('ring-emerald-400');
+            avatarCircle.classList.remove('ring-slate-200');
+            avatarCircle.classList.add('ring-emerald-400');
         });
     })();
 </script>
