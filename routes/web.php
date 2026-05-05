@@ -38,7 +38,7 @@ Route::get('/berkas/{path}', function (string $path) {
     return response()->file($pathOnDisk, [
         'Content-Disposition' => 'inline; filename="' . basename($path) . '"'
     ]);
-})->where('path', '.*')->middleware('auth')->name('storage.file');
+})->where('path', '.*')->name('storage.file');
 
 Route::get('/lang/{lang}', function ($lang) {
     if (in_array($lang, ['id', 'en'])) {

@@ -7,7 +7,7 @@
 <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
     <div class="flex items-center gap-4">
         @if($peserta->user->avatar_path)
-            <img src="{{ Storage::url($peserta->user->avatar_path) }}" alt="Avatar" class="h-14 w-14 rounded-full object-cover border border-slate-200 shadow-sm ring-4 ring-slate-50">
+            <img src="{{ route('storage.file', $peserta->user->avatar_path) }}" alt="Avatar" class="h-14 w-14 rounded-full object-cover border border-slate-200 shadow-sm ring-4 ring-slate-50">
         @else
             <div class="flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 text-lg font-bold tracking-wider text-blue-700 shadow-sm ring-4 ring-white">
                 {{ strtoupper(substr($peserta->user->name, 0, 1)) }}

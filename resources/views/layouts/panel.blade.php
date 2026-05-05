@@ -45,7 +45,7 @@
         {{-- User Profile Block --}}
         <div class="flex flex-col items-center border-b border-white/20 py-6 px-4 shrink-0">
             @if(auth()->user()->avatar_path)
-                <img src="{{ asset('storage/' . auth()->user()->avatar_path) }}" alt="Avatar" class="mb-2 h-12 w-12 shrink-0 rounded-full object-cover shadow-sm ring-4 ring-white/20">
+                <img src="{{ route('storage.file', auth()->user()->avatar_path) }}" alt="Avatar" class="mb-2 h-12 w-12 shrink-0 rounded-full object-cover shadow-sm ring-4 ring-white/20">
             @else
                 <div class="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-lg font-bold text-white shadow-sm ring-4 ring-white/10">
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
@@ -84,7 +84,7 @@
             {{-- Kiri: Area Logo (sejajar sidebar w-64) --}}
             <div class="hidden md:flex h-full w-64 shrink-0 items-center bg-white border-b border-slate-200 px-4">
                 <a href="{{ $panelHome ?? '#' }}" class="flex items-center">
-                    <img src="{{ asset('storage/avatars/logo-rs-awalbros.png') }}"
+                    <img src="{{ route('storage.file', 'avatars/logo-rs-awalbros.png') }}"
                          alt="RS Awal Bros"
                          class="h-10 w-auto object-contain">
                 </a>
@@ -110,7 +110,7 @@
                     </button>
                     {{-- Logo mobile (di tengah) --}}
                     <div class="md:hidden flex items-center">
-                        <img src="{{ asset('storage/avatars/logo-rs-awalbros.png') }}" alt="RS Awal Bros" class="h-8 w-auto object-contain">
+                        <img src="{{ route('storage.file', 'avatars/logo-rs-awalbros.png') }}" alt="RS Awal Bros" class="h-8 w-auto object-contain">
                     </div>
                 </div>
 
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     @if(auth()->user()->avatar_path)
-                        <img src="{{ asset('storage/' . auth()->user()->avatar_path) }}" alt="Avatar"
+                        <img src="{{ route('storage.file', auth()->user()->avatar_path) }}" alt="Avatar"
                              class="h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-slate-100 ring-offset-1">
                     @else
                         <div class="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-sm font-bold text-slate-600 ring-2 ring-slate-100 ring-offset-1">

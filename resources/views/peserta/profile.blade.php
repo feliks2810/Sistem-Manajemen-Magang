@@ -38,7 +38,7 @@
                 <div id="avatar-wrapper" class="relative h-24 w-24 shrink-0">
                     <div id="avatar-circle" class="h-24 w-24 overflow-hidden rounded-full border-4 border-white shadow-md bg-slate-100 ring-1 ring-slate-200 transition-all" style="position:relative;">
                         @if(auth()->user()->avatar_path)
-                            <img id="avatar-current" src="{{ asset('storage/'.auth()->user()->avatar_path) }}" class="h-full w-full object-cover">
+                            <img id="avatar-current" src="{{ route('storage.file', auth()->user()->avatar_path) }}" class="h-full w-full object-cover">
                         @else
                             <div id="avatar-initial" class="flex h-full w-full items-center justify-center text-3xl font-bold text-blue-300 bg-blue-50">
                                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}

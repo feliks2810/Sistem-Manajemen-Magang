@@ -79,7 +79,7 @@
 <body>
     <div class="card">
         <div class="logo-wrap">
-            <img src="{{ asset('storage/avatars/logo-rs-awalbros.png') }}" alt="RS Awal Bros">
+            <img src="{{ route('storage.file', 'avatars/logo-rs-awalbros.png') }}" alt="RS Awal Bros">
         </div>
 
         <div class="icon-wrap">

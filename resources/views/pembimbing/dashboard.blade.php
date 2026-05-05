@@ -117,7 +117,7 @@
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
                                     @if($p->user->avatar_path)
-                                        <img src="{{ Storage::url($p->user->avatar_path) }}" alt="Avatar" class="h-9 w-9 rounded-full object-cover border border-slate-200 shadow-sm">
+                                        <img src="{{ route('storage.file', $p->user->avatar_path) }}" alt="Avatar" class="h-9 w-9 rounded-full object-cover border border-slate-200 shadow-sm">
                                     @else
                                         <div class="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-xs font-bold tracking-wider text-blue-700 shadow-sm ring-1 ring-white">
                                             {{ strtoupper(substr($p->user->name, 0, 1)) }}

@@ -103,7 +103,7 @@
         </a>
 
         <div class="logo-wrap">
-            <img src="{{ asset('storage/avatars/logo-rs-awalbros.png') }}" alt="RS Awal Bros"
+            <img src="{{ route('storage.file', 'avatars/logo-rs-awalbros.png') }}" alt="RS Awal Bros"
                  onerror="this.style.display='none'">
         </div>
 
