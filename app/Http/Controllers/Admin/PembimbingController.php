@@ -38,7 +38,7 @@ class PembimbingController extends Controller
             'password' => ['required', 'min:8', 'confirmed'],
             'nip' => ['nullable', 'string', 'max:64'],
             'phone' => ['nullable', 'string', 'max:32'],
-            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
         ]);
 
         $avatarPath = null;
@@ -80,7 +80,7 @@ class PembimbingController extends Controller
             'password' => ['nullable', 'min:8', 'confirmed'],
             'nip' => ['nullable', 'string', 'max:64'],
             'phone' => ['nullable', 'string', 'max:32'],
-            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
         ]);
 
         $avatarPath = $pembimbing->user->avatar_path;

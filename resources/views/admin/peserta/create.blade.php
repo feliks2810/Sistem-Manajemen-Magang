@@ -23,7 +23,7 @@
                     </div>
                     <input type="file" name="avatar" accept="image/jpeg, image/png, image/jpg" class="w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100 mb-1">
                 </div>
-                <p class="text-[11px] text-slate-400 mt-1">Maksimal ukuran 2MB (Hanya JPG, JPEG, PNG)</p>
+                <p class="text-[11px] text-slate-400 mt-1">Maksimal ukuran 5MB (Hanya JPG, JPEG, PNG)</p>
                 @error('avatar')<p class="mt-1.5 text-xs font-medium text-rose-500">{{ $message }}</p>@enderror
             </div>
 

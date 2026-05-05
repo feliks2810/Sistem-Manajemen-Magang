@@ -47,7 +47,7 @@ class PesertaController extends Controller
             'periode_mulai' => ['required', 'date'],
             'periode_selesai' => ['required', 'date', 'after_or_equal:periode_mulai'],
             'pembimbing_id' => ['nullable', 'exists:pembimbing_profiles,id'],
-            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
         ]);
 
         $avatarPath = null;
@@ -93,7 +93,7 @@ class PesertaController extends Controller
             'periode_mulai' => ['required', 'date'],
             'periode_selesai' => ['required', 'date', 'after_or_equal:periode_mulai'],
             'pembimbing_id' => ['nullable', 'exists:pembimbing_profiles,id'],
-            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
         ]);
 
         $avatarPath = $peserta->user->avatar_path;
