@@ -9,6 +9,12 @@
         <h1 class="text-2xl font-bold tracking-tight text-slate-900">Monitoring Penilaian</h1>
         <p class="mt-1 text-sm text-slate-500">Tinjau seluruh hasil evaluasi & penilaian kinerja peserta magang.</p>
     </div>
+    <div class="flex shrink-0 items-center gap-3">
+        <a href="{{ route('admin.penilaian.export', ['pembimbing_id' => request('pembimbing_id'), 'peserta_id' => request('peserta_id')]) }}" class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            Unduh Tabel (CSV)
+        </a>
+    </div>
 </div>
 
 <div class="mb-6 rounded-[14px] bg-white p-5 shadow-sm border border-slate-200/80">

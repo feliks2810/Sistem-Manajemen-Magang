@@ -22,7 +22,7 @@
             flex: 1;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(rgba(0, 45, 52, 0.4), rgba(0, 95, 107, 0.7)), url('{{ route('storage.file', 'avatars/image.png') }}');
+            background: linear-gradient(rgba(0, 45, 52, 0.4), rgba(0, 95, 107, 0.7)), url('{{ asset('images/image.png') }}');
             background-size: cover;
             background-position: center;
             padding: 3rem;
@@ -241,7 +241,7 @@
         <div class="blob blob-c"></div>
 
         <div class="brand-badge" style="position:relative;z-index:1;">
-            <img src="{{ route('storage.file', 'avatars/logo-rs-awalbros.png') }}" alt="RS Awal Bros"
+            <img src="{{ asset('images/logo-rs-awalbros.png') }}" alt="RS Awal Bros"
                  onerror="this.style.display='none'">
         </div>
 
@@ -263,7 +263,7 @@
 
             {{-- Logo (mobile only) --}}
             <div class="mobile-logo">
-                <img src="{{ route('storage.file', 'avatars/logo-rs-awalbros.png') }}" alt="RS Awal Bros"
+                <img src="{{ asset('images/logo-rs-awalbros.png') }}" alt="RS Awal Bros"
                      onerror="this.style.display='none'">
             </div>
 

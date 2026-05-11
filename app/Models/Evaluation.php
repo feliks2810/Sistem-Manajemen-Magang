@@ -40,4 +40,17 @@ class Evaluation extends Model
     {
         return $this->hasMany(EvaluationRubricScore::class);
     }
+
+    public function getKategoriAttribute(): string
+    {
+        $nilai = $this->total_nilai;
+        if ($nilai === null) {
+            return '-';
+        }
+        
+        if ($nilai >= 90) return 'Sangat Baik';
+        if ($nilai >= 80) return 'Baik';
+        if ($nilai >= 70) return 'Cukup';
+        return 'Kurang';
+    }
 }

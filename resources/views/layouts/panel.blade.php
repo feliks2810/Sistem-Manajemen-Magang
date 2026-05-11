@@ -84,7 +84,7 @@
             {{-- Kiri: Area Logo (sejajar sidebar w-64) --}}
             <div class="hidden md:flex h-full w-64 shrink-0 items-center bg-white border-b border-slate-200 px-4">
                 <a href="{{ $panelHome ?? '#' }}" class="flex items-center">
-                    <img src="{{ route('storage.file', 'avatars/logo-rs-awalbros.png') }}"
+                    <img src="{{ asset('images/logo-rs-awalbros.png') }}"
                          alt="RS Awal Bros"
                          class="h-10 w-auto object-contain">
                 </a>
@@ -110,7 +110,7 @@
                     </button>
                     {{-- Logo mobile (di tengah) --}}
                     <div class="md:hidden flex items-center">
-                        <img src="{{ route('storage.file', 'avatars/logo-rs-awalbros.png') }}" alt="RS Awal Bros" class="h-8 w-auto object-contain">
+                        <img src="{{ asset('images/logo-rs-awalbros.png') }}" alt="RS Awal Bros" class="h-8 w-auto object-contain">
                     </div>
                 </div>
 

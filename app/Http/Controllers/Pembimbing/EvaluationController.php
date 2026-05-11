@@ -65,7 +65,7 @@ class EvaluationController extends Controller
             'is_final' => ['nullable', 'boolean'],
         ];
         foreach ($rubrics as $r) {
-            $rules['nilai_'.$r->id] = ['required', 'numeric', 'min:0', 'max:'.$r->bobot_maks];
+            $rules['nilai_'.$r->id] = ['required', 'numeric', 'min:0', 'max:100'];
         }
 
         $data = $request->validate($rules);

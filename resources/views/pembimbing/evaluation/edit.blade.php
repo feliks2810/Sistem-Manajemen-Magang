@@ -30,29 +30,45 @@
     <form action="{{ route('pembimbing.evaluation.update', $peserta) }}" method="post" class="p-6 sm:p-8 space-y-8">
         @csrf @method('PUT')
         
-        <div class="space-y-6">
-            @foreach($rubrics as $index => $r)
-                @php $sc = $scoresByRubric->get($r->id); @endphp
-                <div class="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 hover:border-slate-300">
-                    <div class="flex-1">
-                        <label class="block text-sm font-bold text-slate-800 tracking-tight" for="nilai_{{ $r->id }}">
-                            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-500 mr-2">{{ $index + 1 }}</span>
-                            {{ $r->nama }}
-                        </label>
-                        <p class="mt-1 ml-8 text-xs text-slate-500">Bobot maksimal: <span class="font-semibold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">{{ $r->bobot_maks }}</span></p>
-                    </div>
-                    <div class="sm:w-40 flex-shrink-0">
-                        <div class="relative">
-                            <input type="number" step="0.01" min="0" max="{{ $r->bobot_maks }}" name="nilai_{{ $r->id }}" id="nilai_{{ $r->id }}"
-                                value="{{ old('nilai_'.$r->id, $sc?->nilai ?? null) }}" required placeholder="0.00"
-                                class="w-full rounded-xl border border-slate-300 py-2.5 pl-4 pr-10 text-right font-mono text-sm font-semibold text-slate-900 outline-none transition-all placeholder:font-normal placeholder:text-slate-300 focus:border-blue-500 focus:ring-0">
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                                <span class="text-sm font-medium text-slate-400">pt</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+        <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-left text-sm text-slate-700">
+                <thead class="bg-slate-50 text-slate-900 border-b border-slate-200">
+                    <tr>
+                        <th class="px-4 py-3 font-semibold text-center w-12">No</th>
+                        <th class="px-4 py-3 font-semibold">Aspek Penilaian</th>
+                        <th class="px-4 py-3 font-semibold text-center w-32">Bobot Maks.</th>
+                        <th class="px-4 py-3 font-semibold text-center w-40">Nilai (0 - 100)</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 bg-white">
+                    @foreach($rubrics as $index => $r)
+                        @php $sc = $scoresByRubric->get($r->id); @endphp
+                        <tr class="hover:bg-slate-50/50 transition-colors">
+                            <td class="px-4 py-3 text-center font-medium text-slate-500">{{ $index + 1 }}</td>
+                            <td class="px-4 py-3">
+                                <label for="nilai_{{ $r->id }}" class="block font-medium text-slate-800 cursor-pointer">
+                                    {{ $r->nama }}
+                                </label>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="inline-flex items-center justify-center rounded-md bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600 ring-1 ring-inset ring-slate-500/10">
+                                    {{ $r->bobot_maks }}%
+                                </span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="relative">
+                                    <input type="number" step="0.01" min="0" max="100" name="nilai_{{ $r->id }}" id="nilai_{{ $r->id }}"
+                                        value="{{ old('nilai_'.$r->id, $sc?->nilai ?? null) }}" required placeholder="0 - 100"
+                                        class="block w-full rounded-lg border border-slate-300 py-2 pl-3 pr-10 text-right font-mono text-sm text-slate-900 focus:border-blue-500 focus:ring-blue-500 placeholder:text-slate-300">
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                        <span class="text-xs font-medium text-slate-400">pt</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
 
         <div class="border-t border-slate-100 pt-8">

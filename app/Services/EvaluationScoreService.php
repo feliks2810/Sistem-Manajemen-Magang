@@ -19,8 +19,10 @@ class EvaluationScoreService
         foreach ($evaluation->rubricScores as $score) {
             $score->loadMissing('rubric');
             $b = max((float) $score->rubric->bobot_maks, 0.0001);
-            $n = (float) $score->nilai;
-            $weighted += ($n / $b) * 100.0 * ((float) $score->rubric->bobot_maks / $sumBobot);
+            $n = (float) $score->nilai; // Value is 0-100
+            
+            // weighted = sum of (score_out_of_100 * (weight / total_weight))
+            $weighted += $n * ($b / $sumBobot);
         }
 
         $evaluation->update(['total_nilai' => round($weighted, 2)]);

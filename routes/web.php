@@ -21,6 +21,7 @@ use App\Http\Controllers\Peserta\DashboardController as PesertaDashboardControll
 use App\Http\Controllers\Peserta\HistoryController as PesertaHistoryController;
 use App\Http\Controllers\Peserta\LeaveController as PesertaLeaveController;
 use App\Http\Controllers\Peserta\ProfileController as PesertaProfileController;
+use App\Http\Controllers\Peserta\EvaluationController as PesertaEvaluationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -111,6 +112,9 @@ Route::middleware(['auth', 'role:peserta'])->prefix('peserta')->name('peserta.')
 
     Route::get('/izin/baru', [PesertaLeaveController::class, 'create'])->name('leave.create');
     Route::post('/izin', [PesertaLeaveController::class, 'store'])->name('leave.store');
+
+    Route::get('/penilaian', [PesertaEvaluationController::class, 'index'])->name('evaluation.index');
+    Route::get('/penilaian/download', [PesertaEvaluationController::class, 'download'])->name('evaluation.download');
 
     Route::get('/riwayat-absensi', PesertaHistoryController::class)->name('history');
 
