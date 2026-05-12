@@ -62,9 +62,17 @@
                             @endif
                         </td>
                         <td class="px-5 py-4 text-right font-medium">
-                            <a class="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-800 font-semibold transition-colors" href="{{ route('pembimbing.evaluation.edit', $p) }}">
-                                Isi Penilaian <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                            </a>
+                            <div class="flex items-center justify-end gap-3">
+                                @if($ev?->is_final)
+                                <a href="{{ route('pembimbing.evaluation.download', $p) }}" class="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                    Unduh PDF
+                                </a>
+                                @endif
+                                <a class="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-800 font-semibold transition-colors" href="{{ route('pembimbing.evaluation.edit', $p) }}">
+                                    Isi Penilaian <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 @empty

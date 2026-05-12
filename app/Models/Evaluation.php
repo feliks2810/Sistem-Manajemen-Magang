@@ -41,16 +41,17 @@ class Evaluation extends Model
         return $this->hasMany(EvaluationRubricScore::class);
     }
 
-    public function getKategoriAttribute(): string
+    public function getPredikatAttribute(): string
     {
         $nilai = $this->total_nilai;
         if ($nilai === null) {
             return '-';
         }
         
-        if ($nilai >= 90) return 'Sangat Baik';
-        if ($nilai >= 80) return 'Baik';
-        if ($nilai >= 70) return 'Cukup';
-        return 'Kurang';
+        if ($nilai >= 85) return 'A';
+        if ($nilai >= 70) return 'B';
+        if ($nilai >= 55) return 'C';
+        if ($nilai >= 40) return 'D';
+        return 'E';
     }
 }

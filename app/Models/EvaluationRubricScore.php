@@ -29,4 +29,18 @@ class EvaluationRubricScore extends Model
     {
         return $this->belongsTo(Rubric::class);
     }
+
+    public function getPredikatAttribute(): string
+    {
+        $nilai = $this->nilai;
+        if ($nilai === null) {
+            return '-';
+        }
+        
+        if ($nilai >= 85) return 'A';
+        if ($nilai >= 70) return 'B';
+        if ($nilai >= 55) return 'C';
+        if ($nilai >= 40) return 'D';
+        return 'E';
+    }
 }

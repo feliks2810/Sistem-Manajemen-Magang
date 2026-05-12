@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class EvaluationController extends Controller
 {
@@ -109,5 +110,24 @@ class EvaluationController extends Controller
         if ($peserta->pembimbing_id !== $pid) {
             abort(403);
         }
+    }
+
+    public function download(PesertaProfile $peserta)
+    {
+        $this->authorizePeserta($peserta);
+
+        $evaluation = Evaluation::with(['pesertaProfile.user', 'pembimbingProfile.user', 'rubricScores.rubric'])
+            ->where('peserta_profile_id', $peserta->id)
+            ->first();
+
+        if (!$evaluation || !$evaluation->is_final) {
+            return redirect()->back()->with('error', 'Penilaian belum tersedia atau belum final.');
+        }
+
+        $profile = $peserta;
+
+        $pdf = Pdf::loadView('pdf.evaluation', compact('evaluation', 'profile'));
+        
+        return $pdf->download('Penilaian_Magang_' . $profile->nim . '.pdf');
     }
 }

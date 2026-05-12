@@ -18,7 +18,18 @@
 </div>
 
 <div class="mb-6 rounded-[14px] bg-white p-5 shadow-sm border border-slate-200/80">
-    <form method="get" class="m-0 flex flex-col sm:flex-row gap-4">
+    <form method="get" class="m-0 flex flex-col sm:flex-row flex-wrap gap-4">
+        {{-- Search Input --}}
+        <div class="flex-1 min-w-[200px]">
+            <label class="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-500" for="search">Cari Peserta</label>
+            <div class="relative">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
+                    <svg class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+                <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Cari nama..."
+                    class="block w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 text-sm text-slate-900 transition-colors focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10">
+            </div>
+        </div>
         {{-- Pembimbing Dropdown --}}
         <div class="flex-1">
             <label class="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-500" for="pembimbing_id">Filter Pembimbing</label>
@@ -58,6 +69,9 @@
                 </div>
             </div>
         </div>
+        <div class="flex items-end shrink-0">
+            <button type="submit" class="h-[42px] rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all">Terapkan</button>
+        </div>
     </form>
 </div>
 
@@ -80,9 +94,14 @@
                         <td class="px-5 py-4 font-medium text-slate-900 group-hover:text-blue-700">{{ $ev->pesertaProfile->user->name }}</td>
                         <td class="px-5 py-4 text-slate-600">{{ $ev->pembimbingProfile?->user?->name ?? '—' }}</td>
                         <td class="px-5 py-4 text-right">
-                            <span class="inline-block rounded-lg {{ $ev->total_nilai ? 'bg-slate-50 border border-slate-200/60' : '' }} px-2.5 py-1.5 font-mono text-sm font-semibold text-slate-800">
-                                {{ $ev->total_nilai ?? '—' }}
-                            </span>
+                            @if($ev->total_nilai !== null)
+                            <div class="inline-flex items-center gap-2 rounded-lg bg-slate-50 border border-slate-200/60 px-2.5 py-1.5">
+                                <span class="font-mono text-sm font-semibold text-slate-800">{{ $ev->total_nilai }}</span>
+                                <span class="rounded bg-blue-100 px-1.5 py-0.5 text-xs font-bold text-blue-700">{{ $ev->predikat }}</span>
+                            </div>
+                            @else
+                            <span class="inline-block rounded-lg px-2.5 py-1.5 font-mono text-sm font-semibold text-slate-800">—</span>
+                            @endif
                         </td>
                         <td class="px-5 py-4">
                             @if($ev->is_final)
@@ -99,10 +118,18 @@
                         </td>
                         <td class="px-5 py-4 text-slate-500 tabular-nums">{{ $ev->updated_at->format('d/m/Y H:i') }}</td>
                         <td class="px-5 py-4 text-center">
-                            <button type="button" onclick="toggleDetail('detail-row-{{ $ev->id }}')" class="inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                <span id="btn-text-{{ $ev->id }}">Info Detail</span>
-                            </button>
+                            <div class="flex items-center justify-center gap-2">
+                                <button type="button" onclick="toggleDetail('detail-row-{{ $ev->id }}')" class="inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    <span id="btn-text-{{ $ev->id }}">Info Detail</span>
+                                </button>
+                                @if($ev->is_final)
+                                <a href="{{ route('admin.penilaian.download', $ev) }}" class="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                    Unduh PDF
+                                </a>
+                                @endif
+                            </div>
                         </td>
                     </tr>
                     <tr id="detail-row-{{ $ev->id }}" style="display: none;" class="bg-indigo-50/30 border-t-0">
@@ -112,8 +139,11 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                                     @forelse($ev->rubricScores as $score)
                                         <div class="rounded-xl border border-slate-200 bg-white p-3.5 shadow-sm transition-shadow hover:shadow-md">
-                                            <div class="text-xs font-medium text-slate-500 uppercase tracking-wide">{{ $score->rubric->name ?? 'Kriteria' }}</div>
-                                            <div class="mt-1 text-2xl font-bold text-slate-900">{{ $score->nilai }}</div>
+                                            <div class="text-xs font-medium text-slate-500 uppercase tracking-wide">{{ $score->rubric->nama ?? 'Kriteria' }}</div>
+                                            <div class="mt-1 flex items-baseline gap-2">
+                                                <span class="text-2xl font-bold text-slate-900">{{ $score->nilai }}</span>
+                                                <span class="text-sm font-bold text-blue-600">({{ $score->predikat }})</span>
+                                            </div>
                                         </div>
                                     @empty
                                         <div class="text-sm text-slate-500 italic py-2">Belum ada rincian nilai.</div>

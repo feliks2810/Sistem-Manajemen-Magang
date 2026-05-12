@@ -36,8 +36,8 @@
                             <tr>
                                 <th class="px-5 py-3 font-semibold text-center w-12">No</th>
                                 <th class="px-5 py-3 font-semibold">Aspek Penilaian</th>
-                                <th class="px-5 py-3 font-semibold text-center w-32">Bobot Maks.</th>
-                                <th class="px-5 py-3 font-semibold text-right w-32">Nilai</th>
+                                <th class="px-5 py-3 font-semibold text-right w-32">Nilai Angka</th>
+                                <th class="px-5 py-3 font-semibold text-center w-32">Nilai Huruf</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
@@ -45,9 +45,13 @@
                                 <tr class="hover:bg-slate-50/50 transition-colors">
                                     <td class="px-5 py-3 text-center font-medium text-slate-500">{{ $index + 1 }}</td>
                                     <td class="px-5 py-3 font-medium text-slate-800">{{ $score->rubric->nama }}</td>
-                                    <td class="px-5 py-3 text-center text-slate-600">{{ $score->rubric->bobot_maks }}%</td>
-                                    <td class="px-5 py-3 text-right font-mono font-semibold {{ $score->nilai >= 80 ? 'text-emerald-600' : ($score->nilai >= 60 ? 'text-amber-600' : 'text-red-600') }}">
+                                    <td class="px-5 py-3 text-right font-mono font-semibold {{ $score->nilai >= 70 ? 'text-blue-600' : ($score->nilai >= 55 ? 'text-amber-600' : 'text-red-600') }}">
                                         {{ $score->nilai }}
+                                    </td>
+                                    <td class="px-5 py-3 text-center">
+                                        <span class="inline-flex items-center justify-center rounded-md px-2.5 py-1 text-xs font-bold ring-1 ring-inset {{ $score->predikat == 'A' ? 'bg-emerald-100 text-emerald-700 ring-emerald-600/20' : ($score->predikat == 'B' ? 'bg-blue-100 text-blue-700 ring-blue-600/20' : ($score->predikat == 'C' ? 'bg-amber-100 text-amber-700 ring-amber-600/20' : 'bg-red-100 text-red-700 ring-red-600/20')) }}">
+                                            {{ $score->predikat }}
+                                        </span>
                                     </td>
                                 </tr>
                             @empty
@@ -58,8 +62,17 @@
                         </tbody>
                         <tfoot class="bg-slate-50 border-t border-slate-200">
                             <tr>
-                                <td colspan="3" class="px-5 py-4 text-right font-bold text-slate-800">NILAI AKHIR :</td>
+                                <td colspan="2" class="px-5 py-4 text-right font-bold text-slate-800">NILAI AKHIR (RATA-RATA) :</td>
                                 <td class="px-5 py-4 text-right font-mono text-xl font-bold text-blue-600">{{ $evaluation->total_nilai ?? '-' }}</td>
+                                <td class="px-5 py-4 text-center">
+                                    @if($evaluation->total_nilai !== null)
+                                        <span class="inline-flex items-center justify-center rounded-md px-3 py-1.5 text-base font-bold ring-1 ring-inset {{ $evaluation->predikat == 'A' ? 'bg-emerald-100 text-emerald-700 ring-emerald-600/20' : ($evaluation->predikat == 'B' ? 'bg-blue-100 text-blue-700 ring-blue-600/20' : ($evaluation->predikat == 'C' ? 'bg-amber-100 text-amber-700 ring-amber-600/20' : 'bg-red-100 text-red-700 ring-red-600/20')) }}">
+                                            {{ $evaluation->predikat }}
+                                        </span>
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                             </tr>
                         </tfoot>
                     </table>
@@ -79,28 +92,29 @@
 
         <div class="space-y-6">
             <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm flex flex-col items-center justify-center text-center">
-                <div class="mb-2 text-sm font-bold text-slate-500 uppercase tracking-widest">Kategori Penilaian</div>
+                <div class="mb-2 text-sm font-bold text-slate-500 uppercase tracking-widest">Predikat Penilaian</div>
                 
                 @php
-                    $kategori = $evaluation->kategori;
-                    $kategoriColor = match($kategori) {
-                        'Sangat Baik' => 'bg-emerald-100 text-emerald-700 ring-emerald-500/20',
-                        'Baik' => 'bg-blue-100 text-blue-700 ring-blue-500/20',
-                        'Cukup' => 'bg-amber-100 text-amber-700 ring-amber-500/20',
-                        'Kurang' => 'bg-red-100 text-red-700 ring-red-500/20',
+                    $predikat = $evaluation->predikat;
+                    $kategoriColor = match($predikat) {
+                        'A' => 'bg-emerald-100 text-emerald-700 ring-emerald-500/20',
+                        'B' => 'bg-blue-100 text-blue-700 ring-blue-500/20',
+                        'C' => 'bg-amber-100 text-amber-700 ring-amber-500/20',
+                        'D', 'E' => 'bg-red-100 text-red-700 ring-red-500/20',
                         default => 'bg-slate-100 text-slate-700 ring-slate-500/20',
                     };
                 @endphp
                 
-                <div class="inline-flex items-center rounded-full px-6 py-2 text-xl font-black ring-1 ring-inset {{ $kategoriColor }}">
-                    {{ $kategori }}
+                <div class="inline-flex items-center rounded-full px-6 py-2 text-2xl font-black ring-1 ring-inset {{ $kategoriColor }}">
+                    {{ $predikat }}
                 </div>
                 
                 <div class="mt-6 w-full space-y-2 text-left text-xs text-slate-500">
-                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>Sangat Baik</span> <span class="font-semibold text-slate-700">90 - 100</span></div>
-                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>Baik</span> <span class="font-semibold text-slate-700">80 - 89</span></div>
-                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>Cukup</span> <span class="font-semibold text-slate-700">70 - 79</span></div>
-                    <div class="flex justify-between"><span>Kurang</span> <span class="font-semibold text-slate-700">&lt; 70</span></div>
+                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>A (Sangat Baik)</span> <span class="font-semibold text-slate-700">85 - 100</span></div>
+                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>B (Baik)</span> <span class="font-semibold text-slate-700">70 - 84.99</span></div>
+                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>C (Cukup)</span> <span class="font-semibold text-slate-700">55 - 69.99</span></div>
+                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>D (Kurang)</span> <span class="font-semibold text-slate-700">40 - 54.99</span></div>
+                    <div class="flex justify-between"><span>E (Gagal)</span> <span class="font-semibold text-slate-700">0 - 39.99</span></div>
                 </div>
             </div>
 

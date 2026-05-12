@@ -8,6 +8,7 @@ use App\Models\PesertaProfile;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class EvaluationReportController extends Controller
 {
@@ -15,6 +16,7 @@ class EvaluationReportController extends Controller
     {
         $pesertaId = $request->integer('peserta_id') ?: null;
         $pembimbingId = $request->integer('pembimbing_id') ?: null;
+        $search = $request->string('search')->trim();
 
         $q = Evaluation::query()
             ->with(['pesertaProfile.user', 'pembimbingProfile.user', 'rubricScores.rubric'])
@@ -28,6 +30,12 @@ class EvaluationReportController extends Controller
             $q->where('peserta_profile_id', $pesertaId);
         }
 
+        if ($search) {
+            $q->whereHas('pesertaProfile.user', function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            });
+        }
+
         $rows = $q->paginate(20)->withQueryString();
         
         $pembimbingList = \App\Models\PembimbingProfile::query()->with('user')->get();
@@ -38,7 +46,7 @@ class EvaluationReportController extends Controller
         }
         $pesertaList = $pesertaListQuery->get();
 
-        return view('admin.evaluation.index', compact('rows', 'pesertaList', 'pembimbingList', 'pesertaId', 'pembimbingId'));
+        return view('admin.evaluation.index', compact('rows', 'pesertaList', 'pembimbingList', 'pesertaId', 'pembimbingId', 'search'));
     }
 
     public function exportCsv(Request $request): StreamedResponse
@@ -81,5 +89,20 @@ class EvaluationReportController extends Controller
         }, $filename, [
             'Content-Type' => 'text/csv; charset=UTF-8',
         ]);
+    }
+
+    public function download(Evaluation $evaluation)
+    {
+        $evaluation->load(['pesertaProfile.user', 'pembimbingProfile.user', 'rubricScores.rubric']);
+        
+        if (!$evaluation->is_final) {
+            return redirect()->back()->with('error', 'Penilaian belum final.');
+        }
+
+        $profile = $evaluation->pesertaProfile;
+
+        $pdf = Pdf::loadView('pdf.evaluation', compact('evaluation', 'profile'));
+        
+        return $pdf->download('Penilaian_Magang_' . $profile->nim . '.pdf');
     }
 }

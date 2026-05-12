@@ -15,16 +15,15 @@ class EvaluationScoreService
             return;
         }
 
-        $weighted = 0.0;
+        $sum = 0.0;
+        $count = 0;
         foreach ($evaluation->rubricScores as $score) {
-            $score->loadMissing('rubric');
-            $b = max((float) $score->rubric->bobot_maks, 0.0001);
-            $n = (float) $score->nilai; // Value is 0-100
-            
-            // weighted = sum of (score_out_of_100 * (weight / total_weight))
-            $weighted += $n * ($b / $sumBobot);
+            $sum += (float) $score->nilai;
+            $count++;
         }
 
-        $evaluation->update(['total_nilai' => round($weighted, 2)]);
+        $average = $count > 0 ? $sum / $count : 0;
+
+        $evaluation->update(['total_nilai' => round($average, 2)]);
     }
 }

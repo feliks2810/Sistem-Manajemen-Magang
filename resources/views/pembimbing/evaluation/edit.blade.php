@@ -36,12 +36,12 @@
                     <tr>
                         <th class="px-4 py-3 font-semibold text-center w-12">No</th>
                         <th class="px-4 py-3 font-semibold">Aspek Penilaian</th>
-                        <th class="px-4 py-3 font-semibold text-center w-32">Bobot Maks.</th>
-                        <th class="px-4 py-3 font-semibold text-center w-40">Nilai (0 - 100)</th>
+                        <th class="px-4 py-3 font-semibold text-center w-40">Nilai Angka (0 - 100)</th>
+                        <th class="px-4 py-3 font-semibold text-center w-32">Nilai Huruf</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 bg-white">
-                    @foreach($rubrics as $index => $r)
+                    @forelse($rubrics as $index => $r)
                         @php $sc = $scoresByRubric->get($r->id); @endphp
                         <tr class="hover:bg-slate-50/50 transition-colors">
                             <td class="px-4 py-3 text-center font-medium text-slate-500">{{ $index + 1 }}</td>
@@ -51,22 +51,28 @@
                                 </label>
                             </td>
                             <td class="px-4 py-3 text-center">
-                                <span class="inline-flex items-center justify-center rounded-md bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600 ring-1 ring-inset ring-slate-500/10">
-                                    {{ $r->bobot_maks }}%
-                                </span>
-                            </td>
-                            <td class="px-4 py-3">
                                 <div class="relative">
                                     <input type="number" step="0.01" min="0" max="100" name="nilai_{{ $r->id }}" id="nilai_{{ $r->id }}"
                                         value="{{ old('nilai_'.$r->id, $sc?->nilai ?? null) }}" required placeholder="0 - 100"
-                                        class="block w-full rounded-lg border border-slate-300 py-2 pl-3 pr-10 text-right font-mono text-sm text-slate-900 focus:border-blue-500 focus:ring-blue-500 placeholder:text-slate-300">
+                                        class="nilai-input block w-full rounded-lg border border-slate-300 py-2 pl-3 pr-10 text-right font-mono text-sm text-slate-900 focus:border-blue-500 focus:ring-blue-500 placeholder:text-slate-300">
                                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                         <span class="text-xs font-medium text-slate-400">pt</span>
                                     </div>
                                 </div>
                             </td>
+                            <td class="px-4 py-3 text-center">
+                                <span id="huruf_{{ $r->id }}" class="inline-flex items-center justify-center rounded-md bg-slate-100 px-3 py-1.5 text-sm font-bold text-slate-700 ring-1 ring-inset ring-slate-500/20 w-12">
+                                    -
+                                </span>
+                            </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="4" class="px-4 py-8 text-center text-red-500 font-bold bg-red-50">
+                                DATA RUBRIK KOSONG! (Database: {{ DB::connection()->getDatabaseName() }} | Count: {{ count($rubrics) }})
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -74,6 +80,17 @@
         <div class="border-t border-slate-100 pt-8">
             <label class="mb-2 block text-sm font-bold text-slate-800">Komentar Akhir <span class="text-xs font-normal text-slate-400 ml-1">(Catatan evaluasi untuk peserta)</span></label>
             <textarea name="komentar_final" rows="4" placeholder="Tuliskan umpan balik atau komentar evaluasi kinerja peserta di sini..." class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none transition-all placeholder:text-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-slate-50/50 focus:bg-white">{{ old('komentar_final', $evaluation->komentar_final) }}</textarea>
+        </div>
+
+        <div class="rounded-xl border border-blue-200 bg-blue-50 p-4 relative overflow-hidden">
+            <h3 class="text-sm font-bold text-blue-900 mb-2">Keterangan Nilai (Predikat):</h3>
+            <ul class="text-xs text-blue-800 space-y-1 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <li><span class="font-bold">A</span> = 85 - 100 (Sangat Baik)</li>
+                <li><span class="font-bold">B</span> = 70 - 84.99 (Baik)</li>
+                <li><span class="font-bold">C</span> = 55 - 69.99 (Cukup)</li>
+                <li><span class="font-bold">D</span> = 40 - 54.99 (Kurang)</li>
+                <li><span class="font-bold">E</span> = 0 - 39.99 (Gagal)</li>
+            </ul>
         </div>
 
         <div class="rounded-xl border border-amber-200 bg-amber-50 p-4 relative overflow-hidden">
@@ -99,3 +116,43 @@
     </form>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputs = document.querySelectorAll('.nilai-input');
+        
+        function updateHuruf(input) {
+            const val = parseFloat(input.value);
+            const id = input.id.split('_')[1];
+            const hurufSpan = document.getElementById('huruf_' + id);
+            
+            if (isNaN(val)) {
+                hurufSpan.textContent = '-';
+                hurufSpan.className = 'inline-flex items-center justify-center rounded-md bg-slate-100 px-3 py-1.5 text-sm font-bold text-slate-700 ring-1 ring-inset ring-slate-500/20 w-12';
+                return;
+            }
+            
+            let huruf = 'E';
+            let bgClass = 'bg-red-100 text-red-700 ring-red-600/20';
+            
+            if (val >= 85) { huruf = 'A'; bgClass = 'bg-emerald-100 text-emerald-700 ring-emerald-600/20'; }
+            else if (val >= 70) { huruf = 'B'; bgClass = 'bg-blue-100 text-blue-700 ring-blue-600/20'; }
+            else if (val >= 55) { huruf = 'C'; bgClass = 'bg-amber-100 text-amber-700 ring-amber-600/20'; }
+            else if (val >= 40) { huruf = 'D'; bgClass = 'bg-orange-100 text-orange-700 ring-orange-600/20'; }
+            
+            hurufSpan.textContent = huruf;
+            hurufSpan.className = `inline-flex items-center justify-center rounded-md px-3 py-1.5 text-sm font-bold ring-1 ring-inset w-12 ${bgClass}`;
+        }
+
+        inputs.forEach(input => {
+            // Initial update
+            updateHuruf(input);
+            // On change/keyup update
+            input.addEventListener('input', function() {
+                updateHuruf(this);
+            });
+        });
+    });
+</script>
+@endpush

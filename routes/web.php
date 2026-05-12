@@ -74,6 +74,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/absensi', [AdminAttendanceController::class, 'index'])->name('absensi.index');
     Route::get('/penilaian', [EvaluationReportController::class, 'index'])->name('penilaian.index');
     Route::get('/penilaian/export', [EvaluationReportController::class, 'exportCsv'])->name('penilaian.export');
+    Route::get('/penilaian/download/{evaluation}', [EvaluationReportController::class, 'download'])->name('penilaian.download');
     Route::get('/sertifikat', AdminSertifikatPageController::class)->name('sertifikat.page');
     Route::post('/sertifikat/generate', [AdminCertificateController::class, 'generate'])->name('sertifikat.generate');
     Route::get('/sertifikat/download/{certificate}', [AdminCertificateController::class, 'download'])->name('sertifikat.download');
@@ -93,6 +94,7 @@ Route::middleware(['auth', 'role:pembimbing'])->prefix('pembimbing')->name('pemb
     Route::get('/penilaian', [PembimbingEvaluationController::class, 'index'])->name('evaluation.index');
     Route::get('/penilaian/{peserta}/edit', [PembimbingEvaluationController::class, 'edit'])->name('evaluation.edit');
     Route::put('/penilaian/{peserta}', [PembimbingEvaluationController::class, 'update'])->name('evaluation.update');
+    Route::get('/penilaian/{peserta}/download', [PembimbingEvaluationController::class, 'download'])->name('evaluation.download');
 
     Route::get('/peserta', [\App\Http\Controllers\Pembimbing\PesertaController::class, 'index'])->name('peserta.index');
     Route::get('/peserta/{peserta}', [\App\Http\Controllers\Pembimbing\PesertaController::class, 'show'])->name('peserta.show');
