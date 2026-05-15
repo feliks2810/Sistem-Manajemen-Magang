@@ -58,7 +58,7 @@ class CertificateService
             'nilai' => $average_nilai,
             'total' => $total_nilai,
             'scores' => $scores,
-            'tanggal' => now()->translatedFormat('d F Y'),
+            'tanggal' => now(),
             'logo' => $logo,
             'programName' => $programName,
         ])->setPaper('a4', 'landscape');
