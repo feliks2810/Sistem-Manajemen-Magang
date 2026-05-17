@@ -52,7 +52,15 @@
                             class="block w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-10 text-sm text-slate-900 transition-all duration-200 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10 cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 disabled:opacity-70 disabled:hover:border-slate-200">
                             <option value="" disabled selected>-- Pilih Pembimbing Terlebih Dahulu --</option>
                             @foreach($pesertaList as $p)
-                                <option value="{{ $p->id }}" data-pembimbing-id="{{ $p->pembimbing_id }}">{{ $p->nim }} — {{ $p->user->name }}</option>
+                                @php
+                                    $hasFinalEvaluation = $p->evaluations->isNotEmpty();
+                                @endphp
+                                <option value="{{ $p->id }}" 
+                                    data-pembimbing-id="{{ $p->pembimbing_id }}"
+                                    data-has-evaluation="{{ $hasFinalEvaluation ? '1' : '0' }}"
+                                    {{ !$hasFinalEvaluation ? 'disabled class=text-slate-400' : '' }}>
+                                    {{ $p->nim }} — {{ $p->user->name }}{{ !$hasFinalEvaluation ? ' (Belum Ada Nilai Final)' : '' }}
+                                </option>
                             @endforeach
                         </select>
 

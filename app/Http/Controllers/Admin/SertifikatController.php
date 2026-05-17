@@ -21,6 +21,14 @@ class SertifikatController extends Controller
 
         $peserta = PesertaProfile::query()
             ->findOrFail($data['peserta_profile_id']);
+
+        $hasFinalEvaluation = $peserta->evaluations()->where('is_final', true)->exists();
+        if (!$hasFinalEvaluation) {
+            return redirect()
+                ->route('admin.sertifikat.page')
+                ->with('error', 'Gagal menerbitkan sertifikat. Pembimbing belum memberikan penilaian final untuk peserta ini.');
+        }
+
         $cert->generateOrRefresh($peserta);
 
         return redirect()

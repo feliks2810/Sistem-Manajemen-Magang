@@ -16,7 +16,9 @@ class SertifikatPageController extends Controller
             ->get();
 
         $pesertaList = PesertaProfile::query()
-            ->with('user')
+            ->with(['user', 'evaluations' => function ($query) {
+                $query->where('is_final', true);
+            }])
             ->orderBy('nim')
             ->get();
 

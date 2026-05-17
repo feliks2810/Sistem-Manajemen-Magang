@@ -33,7 +33,12 @@ class SertifikatController extends Controller
         }
 
         if (! $certificate) {
-            $certificate = $cert->generateOrRefresh($profile);
+            return view('peserta.certificate', [
+                'certificate' => null,
+                'profile' => $profile,
+                'eval' => $eval,
+                'message' => 'Sertifikat Anda belum diterbitkan oleh Admin. Silakan hubungi admin untuk menerbitkan sertifikat Anda.',
+            ]);
         }
 
         return view('peserta.certificate', [
@@ -62,6 +67,12 @@ class SertifikatController extends Controller
     public function regenerate(CertificateService $cert): RedirectResponse
     {
         $profile = Auth::user()->pesertaProfile;
+        $certificate = Certificate::query()->where('peserta_profile_id', $profile?->id)->first();
+        
+        if (!$certificate) {
+            return redirect()->route('peserta.certificate')->with('error', 'Sertifikat belum diterbitkan oleh Admin.');
+        }
+
         $cert->generateOrRefresh($profile);
 
         return redirect()->route('peserta.certificate')->with('success', 'Sertifikat diperbarui.');

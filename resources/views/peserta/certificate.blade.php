@@ -19,19 +19,30 @@
             </div>
         </div>
 
-        <div class="rounded-[14px] border border-slate-200 bg-white p-5">
+        <div class="rounded-[14px] border border-slate-200 bg-white p-5 shadow-sm">
             <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Syarat Mendapatkan Sertifikat</p>
-            <ul class="space-y-2.5">
-                @foreach([
-                    'Penilaian akhir telah diberikan oleh pembimbing',
-                    'Status penilaian sudah di-finalisasi (bukan draft)',
-                    'Data profil magang sudah dilengkapi (NIM, dll.)',
-                ] as $syarat)
-                <li class="flex items-center gap-2.5 text-sm text-slate-600">
-                    <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-slate-50">
-                        <svg class="h-2.5 w-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 12l2 2 4-4"/></svg>
+            <ul class="space-y-3">
+                @php
+                    $evalExists = !is_null($eval);
+                    $syaratList = [
+                        ['text' => 'Penilaian akhir telah diberikan oleh pembimbing', 'status' => $evalExists],
+                        ['text' => 'Status penilaian sudah di-finalisasi (bukan draft)', 'status' => $evalExists && $eval->is_final],
+                        ['text' => 'Data profil magang sudah dilengkapi (NIM, dll.)', 'status' => !empty($profile->nim)],
+                        ['text' => 'Sertifikat telah diterbitkan oleh Admin', 'status' => !is_null($certificate)],
+                    ];
+                @endphp
+                @foreach($syaratList as $syarat)
+                <li class="flex items-center gap-3 text-sm">
+                    <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border {{ $syarat['status'] ? 'border-emerald-200 bg-emerald-50 text-emerald-600' : 'border-slate-200 bg-slate-50 text-slate-400' }}">
+                        @if($syarat['status'])
+                            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/></svg>
+                        @else
+                            <svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 12l2 2 4-4"/></svg>
+                        @endif
                     </span>
-                    {{ $syarat }}
+                    <span class="{{ $syarat['status'] ? 'text-slate-500 line-through decoration-slate-300' : 'text-slate-700 font-medium' }}">
+                        {{ $syarat['text'] }}
+                    </span>
                 </li>
                 @endforeach
             </ul>
