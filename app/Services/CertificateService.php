@@ -81,9 +81,10 @@ class CertificateService
 
     private function getPredicate(float $score): string
     {
-        if ($score >= 86) return 'A';
+        if ($score >= 85) return 'A';
         if ($score >= 70) return 'B';
-        if ($score >= 51) return 'C';
-        return 'D';
+        if ($score >= 55) return 'C';
+        if ($score >= 40) return 'D';
+        return 'E';
     }
 }
