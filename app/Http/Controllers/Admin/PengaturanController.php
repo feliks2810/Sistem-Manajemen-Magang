@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class SettingController extends Controller
+class PengaturanController extends Controller
 {
     public function locationIndex(): View
     {

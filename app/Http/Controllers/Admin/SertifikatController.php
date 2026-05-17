@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class CertificateController extends Controller
+class SertifikatController extends Controller
 {
     public function generate(Request $request, CertificateService $cert): RedirectResponse
     {

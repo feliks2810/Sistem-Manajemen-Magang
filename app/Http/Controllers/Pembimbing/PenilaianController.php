@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class EvaluationController extends Controller
+class PenilaianController extends Controller
 {
     public function index(): View
     {

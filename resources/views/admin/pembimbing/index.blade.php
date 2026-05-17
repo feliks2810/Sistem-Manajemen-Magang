@@ -42,7 +42,7 @@
                             <span class="inline-flex items-center justify-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 ring-1 ring-inset ring-blue-700/10 min-w-[2rem]">{{ $p->peserta_bimbingan_count }}</span>
                         </td>
                         <td class="px-6 py-4 text-right font-medium">
-                            <a class="text-indigo-600 hover:text-indigo-900 hover:underline transition-colors mr-3" href="{{ route('admin.pembimbing.edit', $p) }}">Edit</a>
+                            <a class="text-indigo-600 hover:text-indigo-900 hover:underline transition-colors mr-3" href="{{ route('admin.pembimbing.edit', $p) }}">Ubah</a>
                             <form action="{{ route('admin.pembimbing.destroy', $p) }}" method="post" class="inline" onsubmit="return confirm('Nonaktifkan pembimbing? Data peserta tetap aman.');">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="text-rose-600 hover:text-rose-900 hover:underline transition-colors">Hapus</button>

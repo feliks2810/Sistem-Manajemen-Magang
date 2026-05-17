@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class HistoryController extends Controller
+class RiwayatController extends Controller
 {
     public function __invoke(Request $request): View
     {

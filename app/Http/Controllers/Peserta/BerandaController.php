@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class DashboardController extends Controller
+class BerandaController extends Controller
 {
     public function __invoke(AttendanceStatsService $stats): View
     {

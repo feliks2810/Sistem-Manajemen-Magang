@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class AttendanceCalendarController extends Controller
+class KalenderAbsensiController extends Controller
 {
     public function index(Request $request): View
     {
@@ -31,9 +31,6 @@ class AttendanceCalendarController extends Controller
         } catch (\Exception $e) {
             $selectedDate = Carbon::today();
         }
-
-        // The FullCalendar handles grid rendering, so we no longer need the $calendarDays array
-
 
         // Fetch attendees for the selected date
         $pesertaList = collect();

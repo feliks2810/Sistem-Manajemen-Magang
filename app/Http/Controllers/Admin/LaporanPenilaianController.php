@@ -10,7 +10,7 @@ use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class EvaluationReportController extends Controller
+class LaporanPenilaianController extends Controller
 {
     public function index(Request $request): View
     {

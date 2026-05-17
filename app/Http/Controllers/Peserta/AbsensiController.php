@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AttendanceController extends Controller
+class AbsensiController extends Controller
 {
     /**
      * Hitung jarak (meter) antara dua koordinat menggunakan Haversine formula.

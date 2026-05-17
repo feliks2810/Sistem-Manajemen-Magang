@@ -56,7 +56,7 @@
                                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
                                       <span class="relative inline-flex rounded-full h-4 w-4 bg-rose-500"></span>
                                     </span>
-                                    Belum check-in
+                                    Belum absen masuk
                                 </h3>
 
                                 {{-- Location Status Badge --}}
@@ -88,7 +88,7 @@
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 rounded-xl border border-emerald-200 bg-emerald-50 p-6 shadow-sm" id="checkout-panel">
                                 <div>
                                     <h3 class="flex items-center gap-2 text-lg font-bold text-emerald-800">
-                                        ✅ Sudah check-in jam {{ $attendanceToday->check_in_at->format('H:i') }}
+                                        ✅ Sudah absen masuk jam {{ $attendanceToday->check_in_at->format('H:i') }}
                                     </h3>
                                     <p class="mt-1 text-sm text-emerald-700">Selamat bekerja! Jangan lupa check-out saat pulang.</p>
                                     
@@ -126,7 +126,7 @@
             <div class="flex flex-col overflow-hidden rounded-[14px] border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:shadow-md hover:border-slate-300">
                 <div class="mb-4 flex items-end justify-between">
                     <div>
-                        <h2 class="font-semibold text-slate-800">Progress Kehadiran</h2>
+                        <h2 class="font-semibold text-slate-800">Progres Kehadiran</h2>
                         <p class="text-sm text-slate-500">Kumulatif kehadiran vs hari kerja</p>
                     </div>
                     <div class="text-right">
@@ -394,8 +394,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const acc  = Math.round(position.coords.accuracy);
                 updateBadge('ok', `Lokasi terdeteksi · Akurasi ±${acc}m`);
 
-                setButtonReady(btnCheckin,  'btn-checkin-label',  '📍 Check-in Sekarang');
-                setButtonReady(btnCheckout, 'btn-checkout-label', '📍 Check-out Sekarang');
+                setButtonReady(btnCheckin,  'btn-checkin-label',  '📍 Absen Masuk Sekarang');
+                setButtonReady(btnCheckout, 'btn-checkout-label', '📍 Absen Keluar Sekarang');
             },
             function(error) {
                 const messages = {
@@ -415,10 +415,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (btnCheckin) {
-        btnCheckin.addEventListener('click', () => doAbsensi(btnCheckin, 'btn-checkin-label', '📍 Check-in Sekarang'));
+        btnCheckin.addEventListener('click', () => doAbsensi(btnCheckin, 'btn-checkin-label', '📍 Absen Masuk Sekarang'));
     }
     if (btnCheckout) {
-        btnCheckout.addEventListener('click', () => doAbsensi(btnCheckout, 'btn-checkout-label', '📍 Check-out Sekarang'));
+        btnCheckout.addEventListener('click', () => doAbsensi(btnCheckout, 'btn-checkout-label', '📍 Absen Keluar Sekarang'));
     }
 });
 </script>

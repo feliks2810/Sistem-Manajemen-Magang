@@ -10,7 +10,7 @@ use App\Models\PesertaProfile;
 use Carbon\Carbon;
 use Illuminate\View\View;
 
-class DashboardController extends Controller
+class BerandaController extends Controller
 {
     public function __invoke(): View
     {

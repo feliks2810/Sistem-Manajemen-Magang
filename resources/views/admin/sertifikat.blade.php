@@ -8,7 +8,7 @@
     <div class="rounded-[14px] border border-slate-200/80 bg-white shadow-sm transition-all duration-200">
         {{-- Card Header Hierarchy --}}
         <div class="border-b border-slate-100 px-8 py-6">
-            <h2 class="text-xl font-bold tracking-tight text-slate-900">Generate Sertifikat</h2>
+            <h2 class="text-xl font-bold tracking-tight text-slate-900">Terbitkan Sertifikat</h2>
             <p class="mt-1.5 text-sm text-slate-500">Buat sertifikat PDF berdasarkan kehadiran dan penilaian akhir peserta secara otomatis.</p>
         </div>
 
@@ -68,7 +68,7 @@
                     <button type="submit" 
                         class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow shadow-blue-500/30 focus:outline-none focus:ring-4 focus:ring-blue-500/20 sm:w-auto">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                        Generate Sertifikat
+                        Terbitkan Sertifikat
                     </button>
                 </div>
             </form>

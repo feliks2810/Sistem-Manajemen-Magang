@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
-class ResetPasswordController extends Controller
+class AturUlangPasswordController extends Controller
 {
     public function showResetForm(Request $request, string $token = null): View
     {

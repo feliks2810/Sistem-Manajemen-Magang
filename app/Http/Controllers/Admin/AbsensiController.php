@@ -8,7 +8,7 @@ use App\Models\PesertaProfile;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class AttendanceController extends Controller
+class AbsensiController extends Controller
 {
     public function index(Request $request): View
     {

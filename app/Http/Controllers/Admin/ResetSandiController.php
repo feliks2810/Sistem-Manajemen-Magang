@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
-class ResetPasswordController extends Controller
+class ResetSandiController extends Controller
 {
     /**
      * Admin langsung ganti password user (tanpa email).

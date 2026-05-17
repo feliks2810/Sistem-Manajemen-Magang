@@ -66,7 +66,7 @@
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div>
-                <p class="text-[10px] font-bold uppercase tracking-wider text-rose-600/70">Alpha</p>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-rose-600/70">Alpa</p>
                 <p class="text-xl font-bold text-rose-700">{{ $recap['alpha'] }} <span class="text-xs font-medium">Hari</span></p>
             </div>
         </div>
@@ -88,8 +88,8 @@
                 <tr class="border-b border-slate-100 bg-slate-50/30">
                     <th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Tanggal</th>
                     <th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Status</th>
-                    <th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Check-in</th>
-                    <th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Check-out</th>
+                    <th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Masuk</th>
+                    <th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Keluar</th>
                     <th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Durasi</th>
                 </tr>
             </thead>
@@ -113,7 +113,7 @@
                                     'hadir'  => ['bg-emerald-50 text-emerald-700 ring-emerald-600/20', 'Hadir'],
                                     'izin'   => ['bg-amber-50 text-amber-700 ring-amber-600/20', 'Izin'],
                                     'sakit'  => ['bg-rose-50 text-rose-700 ring-rose-600/20', 'Sakit'],
-                                    'alpha'  => ['bg-slate-100 text-slate-600 ring-slate-500/20', 'Alpha'],
+                                    'alpha'  => ['bg-slate-100 text-slate-600 ring-slate-500/20', 'Alpa'],
                                     default  => ['bg-slate-100 text-slate-600 ring-slate-500/20', ucfirst($r->status)],
                                 };
                             @endphp
@@ -154,9 +154,9 @@
                                 <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                             </div>
                             <p class="text-sm font-semibold text-slate-700">Belum Ada Riwayat</p>
-                            <p class="text-xs text-slate-500 mt-1">Catatan kehadiran Anda akan muncul di sini setelah melakukan check-in.</p>
+                            <p class="text-xs text-slate-500 mt-1">Catatan kehadiran Anda akan muncul di sini setelah melakukan absen masuk.</p>
                             <a href="{{ route('peserta.dashboard') }}" class="mt-4 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition-all">
-                                Mulai Check-in Sekarang
+                                Mulai Absen Masuk Sekarang
                             </a>
                         </td>
                     </tr>

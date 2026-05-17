@@ -114,7 +114,7 @@
                             </div>
                         </div>
                         <a href="{{ route('storage.file', $doc->path) }}" target="_blank" class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-all shadow-sm">
-                            Buka / Download
+                            Buka / Unduh
                         </a>
                     </div>
                 @empty

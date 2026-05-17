@@ -335,7 +335,7 @@
             </form>
 
             <div class="divider"><span>Sistem Manajemen Magang</span></div>
-            <p style="text-align:center;font-size:0.75rem;color:#94a3b8;">© {{ date('Y') }} RS Awal Bros. All rights reserved.</p>
+            <p style="text-align:center;font-size:0.75rem;color:#94a3b8;">© {{ date('Y') }} RS Awal Bros. Hak Cipta Dilindungi Undang-Undang.</p>
         </div>
     </div>
 

@@ -79,7 +79,7 @@
         
         <div class="rounded-[14px] border border-slate-200/80 bg-white p-6 shadow-sm">
             <h2 class="mb-1 font-semibold text-slate-800">Koordinat Kantor</h2>
-            <p class="mb-5 text-sm text-slate-500">Cari nama tempat, klik di peta, atau drag marker untuk menentukan lokasi kantor.</p>
+            <p class="mb-5 text-sm text-slate-500">Cari nama tempat, klik di peta, atau geser penanda untuk menentukan lokasi kantor.</p>
 
             <form action="{{ route('admin.setting.location.update') }}" method="POST" id="location-form">
                 @csrf
@@ -138,7 +138,7 @@
             <ul class="space-y-1.5 text-xs text-blue-700">
                 <li>🔎 Ketik nama tempat di kotak pencarian di atas peta</li>
                 <li>📌 Pilih hasil pencarian atau klik langsung di peta</li>
-                <li>↕️ Drag marker untuk menggeser titik lokasi</li>
+                <li>↕️ Geser penanda untuk menggeser titik lokasi</li>
                 <li>📏 Lingkaran biru = zona radius yang diizinkan</li>
                 <li>✅ Peserta hanya bisa absen jika berada di dalam lingkaran</li>
             </ul>
@@ -278,7 +278,7 @@
 
         const popupContent = label
             ? `<strong>📍 ${label}</strong><br><span style="font-size:11px;color:#64748b">Klik simpan jika sudah tepat</span>`
-            : `<strong>📍 Lokasi Kantor</strong><br><span style="font-size:11px;color:#64748b">Drag untuk pindahkan titik</span>`;
+            : `<strong>📍 Lokasi Kantor</strong><br><span style="font-size:11px;color:#64748b">Geser untuk pindahkan titik</span>`;
 
         marker = L.marker([lat, lng], { icon: officeIcon, draggable: true })
             .addTo(map)

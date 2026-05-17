@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class ProfileController extends Controller
+class ProfilController extends Controller
 {
     public function edit(): View
     {

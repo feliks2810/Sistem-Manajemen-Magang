@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class CertificateController extends Controller
+class SertifikatController extends Controller
 {
     public function show(CertificateService $cert): View|RedirectResponse
     {

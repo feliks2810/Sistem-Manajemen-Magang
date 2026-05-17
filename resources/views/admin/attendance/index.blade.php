@@ -80,7 +80,7 @@
         </div>
     </div>
     <div class="rounded-2xl border border-rose-100 bg-white p-4 shadow-sm">
-        <p class="text-[10px] font-bold uppercase tracking-wider text-rose-600/70 mb-1">Total Alpha</p>
+        <p class="text-[10px] font-bold uppercase tracking-wider text-rose-600/70 mb-1">Total Alpa</p>
         <div class="flex items-end justify-between">
             <p class="text-2xl font-bold text-slate-800">{{ $summary['alpha'] }}</p>
             <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-50 text-rose-600">
@@ -98,8 +98,8 @@
                     <th class="px-5 py-4 font-semibold text-slate-800">Tanggal</th>
                     <th class="px-5 py-4 font-semibold text-slate-800">Peserta</th>
                     <th class="px-5 py-4 font-semibold text-slate-800">Status</th>
-                    <th class="px-5 py-4 font-semibold text-slate-800">Check-in</th>
-                    <th class="px-5 py-4 font-semibold text-slate-800">Check-out</th>
+                    <th class="px-5 py-4 font-semibold text-slate-800">Absen Masuk</th>
+                    <th class="px-5 py-4 font-semibold text-slate-800">Absen Keluar</th>
                     <th class="px-5 py-4 font-semibold text-slate-800">Lokasi</th>
                 </tr>
             </thead>
@@ -129,7 +129,7 @@
                             @if($r->check_in_lat && $r->check_in_lng)
                                 <a href="https://www.openstreetmap.org/?mlat={{ $r->check_in_lat }}&mlon={{ $r->check_in_lng }}&zoom=18"
                                    target="_blank"
-                                   title="Buka lokasi check-in di OpenStreetMap"
+                                   title="Buka lokasi absen masuk di OpenStreetMap"
                                    class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 ring-1 ring-blue-600/20 hover:bg-blue-100 transition">
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                     Lihat

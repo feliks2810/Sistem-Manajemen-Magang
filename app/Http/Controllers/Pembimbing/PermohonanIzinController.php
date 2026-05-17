@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class LeaveRequestController extends Controller
+class PermohonanIzinController extends Controller
 {
     public function index(): View
     {

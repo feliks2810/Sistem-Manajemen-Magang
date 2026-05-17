@@ -21,7 +21,7 @@
         </div>
         <div>
             <h3 class="text-sm font-bold text-rose-800">Tindakan Diperlukan</h3>
-            <p class="mt-1 text-sm text-rose-700 font-medium">Anda belum melengkapi profil! Harap isi data wajib di bawah (seperti NIM/NIS) agar dapat menggunakan fitur Check-in absensi.</p>
+            <p class="mt-1 text-sm text-rose-700 font-medium">Anda belum melengkapi profil! Harap isi data wajib di bawah (seperti NIM/NIS) agar dapat menggunakan fitur absen masuk.</p>
         </div>
     </div>
 </div>
@@ -99,7 +99,7 @@
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                     </div>
                     <div>
-                        <h3 class="font-bold text-slate-800 text-lg">Upload Dokumen Magang</h3>
+                        <h3 class="font-bold text-slate-800 text-lg">Unggah Dokumen Magang</h3>
                         <p class="text-sm text-slate-500">Unggah Surat Pengantar / Surat Balasan instansi (format <strong>PDF</strong> saja).</p>
                     </div>
                 </div>

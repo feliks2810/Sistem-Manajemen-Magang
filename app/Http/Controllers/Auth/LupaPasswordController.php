@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\View\View;
 
-class ForgotPasswordController extends Controller
+class LupaPasswordController extends Controller
 {
     public function showForm(): View
     {
