@@ -21,7 +21,7 @@
     <a href="{{ route('pembimbing.evaluation.index') }}" class="text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">← Kembali ke daftar</a>
 </div>
 
-<div class="rounded-2xl border border-slate-200 bg-white shadow-sm md:max-w-3xl overflow-hidden">
+<div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden w-full">
     <div class="bg-slate-50/50 border-b border-slate-100 px-6 py-4 sm:px-8">
         <h2 class="text-lg font-bold text-slate-800">Formulir Rubrik Penilaian</h2>
         <p class="mt-1 text-sm text-slate-500">Isi nilai untuk setiap komponen sesuai dengan bobot maksimal yang ditentukan.</p>
@@ -84,12 +84,11 @@
 
         <div class="rounded-xl border border-blue-200 bg-blue-50 p-4 relative overflow-hidden">
             <h3 class="text-sm font-bold text-blue-900 mb-2">Keterangan Nilai (Predikat):</h3>
-            <ul class="text-xs text-blue-800 space-y-1 grid grid-cols-2 sm:grid-cols-3 gap-2">
-                <li><span class="font-bold">A</span> = 85 - 100 (Sangat Baik)</li>
-                <li><span class="font-bold">B</span> = 70 - 84.99 (Baik)</li>
-                <li><span class="font-bold">C</span> = 55 - 69.99 (Cukup)</li>
-                <li><span class="font-bold">D</span> = 40 - 54.99 (Kurang)</li>
-                <li><span class="font-bold">E</span> = 0 - 39.99 (Gagal)</li>
+            <ul class="text-xs text-blue-800 space-y-1 grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <li><span class="font-bold">A</span> = 86 - 100 (Sangat Baik)</li>
+                <li><span class="font-bold">B</span> = 76 - 85.99 (Baik)</li>
+                <li><span class="font-bold">C</span> = 65 - 75.99 (Cukup)</li>
+                <li><span class="font-bold">D</span> = 0 - 64.99 (Kurang)</li>
             </ul>
         </div>
 
@@ -133,13 +132,12 @@
                 return;
             }
             
-            let huruf = 'E';
-            let bgClass = 'bg-red-100 text-red-700 ring-red-600/20';
+            let huruf = 'D';
+            let bgClass = 'bg-orange-100 text-orange-700 ring-orange-600/20';
             
-            if (val >= 85) { huruf = 'A'; bgClass = 'bg-emerald-100 text-emerald-700 ring-emerald-600/20'; }
-            else if (val >= 70) { huruf = 'B'; bgClass = 'bg-blue-100 text-blue-700 ring-blue-600/20'; }
-            else if (val >= 55) { huruf = 'C'; bgClass = 'bg-amber-100 text-amber-700 ring-amber-600/20'; }
-            else if (val >= 40) { huruf = 'D'; bgClass = 'bg-orange-100 text-orange-700 ring-orange-600/20'; }
+            if (val >= 86) { huruf = 'A'; bgClass = 'bg-emerald-100 text-emerald-700 ring-emerald-600/20'; }
+            else if (val >= 76) { huruf = 'B'; bgClass = 'bg-blue-100 text-blue-700 ring-blue-600/20'; }
+            else if (val >= 65) { huruf = 'C'; bgClass = 'bg-amber-100 text-amber-700 ring-amber-600/20'; }
             
             hurufSpan.textContent = huruf;
             hurufSpan.className = `inline-flex items-center justify-center rounded-md px-3 py-1.5 text-sm font-bold ring-1 ring-inset w-12 ${bgClass}`;

@@ -48,6 +48,12 @@ class PesertaController extends Controller
             'periode_selesai' => ['required', 'date', 'after_or_equal:periode_mulai'],
             'pembimbing_id' => ['nullable', 'exists:pembimbing_profiles,id'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
+            'nim' => ['nullable', 'string', 'max:32'],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'jenis_program' => ['nullable', 'string', 'max:255'],
+            'jurusan' => ['nullable', 'string', 'max:255'],
+            'institusi' => ['nullable', 'string', 'max:255'],
+            'alamat' => ['nullable', 'string'],
         ]);
 
         $avatarPath = null;
@@ -67,9 +73,14 @@ class PesertaController extends Controller
             PesertaProfile::query()->create([
                 'user_id' => $user->id,
                 'pembimbing_id' => $data['pembimbing_id'] ?? null,
-                'nim' => null, // Akan diisi mandiri oleh peserta nanti
+                'nim' => $data['nim'] ?? null,
+                'jenis_program' => $data['jenis_program'] ?? null,
+                'jurusan' => $data['jurusan'] ?? null,
+                'institusi' => $data['institusi'] ?? null,
+                'phone' => $data['phone'] ?? null,
                 'periode_mulai' => $data['periode_mulai'],
                 'periode_selesai' => $data['periode_selesai'],
+                'alamat' => $data['alamat'] ?? null,
             ]);
         });
 
@@ -94,6 +105,12 @@ class PesertaController extends Controller
             'periode_selesai' => ['required', 'date', 'after_or_equal:periode_mulai'],
             'pembimbing_id' => ['nullable', 'exists:pembimbing_profiles,id'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
+            'nim' => ['nullable', 'string', 'max:32'],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'jenis_program' => ['nullable', 'string', 'max:255'],
+            'jurusan' => ['nullable', 'string', 'max:255'],
+            'institusi' => ['nullable', 'string', 'max:255'],
+            'alamat' => ['nullable', 'string'],
         ]);
 
         $avatarPath = $peserta->user->avatar_path;
@@ -117,8 +134,14 @@ class PesertaController extends Controller
 
             $peserta->update([
                 'pembimbing_id' => $data['pembimbing_id'] ?? null,
+                'nim' => $data['nim'] ?? null,
+                'jenis_program' => $data['jenis_program'] ?? null,
+                'jurusan' => $data['jurusan'] ?? null,
+                'institusi' => $data['institusi'] ?? null,
+                'phone' => $data['phone'] ?? null,
                 'periode_mulai' => $data['periode_mulai'],
                 'periode_selesai' => $data['periode_selesai'],
+                'alamat' => $data['alamat'] ?? null,
             ]);
         });
 

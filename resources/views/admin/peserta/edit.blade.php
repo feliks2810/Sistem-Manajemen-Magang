@@ -59,10 +59,10 @@
                 <input type="password" name="password_confirmation" placeholder="Ulangi kata sandi..." class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
             </div>
 
-            {{-- Data Magang --}}
+            {{-- Data Magang & Kelengkapan --}}
             <div class="mt-2 col-span-1 border-t border-slate-100 pt-4 md:col-span-2">
-                <h3 class="mb-2 font-semibold text-slate-800">2. Data Penempatan Magang</h3>
-                <p class="text-[13px] text-slate-500 mb-4">NIM dan info detail lain akan dilengkapi oleh peserta di dasbor masing-masing.</p>
+                <h3 class="mb-2 font-semibold text-slate-800">2. Data Penempatan & Profil Magang</h3>
+                <p class="text-[13px] text-slate-500 mb-4">Lengkapi data berikut. (Peserta juga dapat melengkapinya secara mandiri di dasbor mereka).</p>
             </div>
 
             <div>
@@ -74,6 +74,42 @@
                 <label class="mb-1.5 block text-sm font-semibold text-slate-700">Periode Selesai <span class="text-rose-500">*</span></label>
                 <input type="date" name="periode_selesai" value="{{ old('periode_selesai', $peserta->periode_selesai->format('Y-m-d')) }}" required class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
                 @error('periode_selesai')<p class="mt-1.5 text-xs font-medium text-rose-500">{{ $message }}</p>@enderror
+            </div>
+
+            <div>
+                <label class="mb-1.5 block text-sm font-semibold text-slate-700">Nomor Telepon (WhatsApp) <span class="text-xs font-normal text-slate-400 ml-1">(Opsional)</span></label>
+                <input type="text" name="phone" value="{{ old('phone', $peserta->phone) }}" placeholder="08..." class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                @error('phone')<p class="mt-1.5 text-xs font-medium text-rose-500">{{ $message }}</p>@enderror
+            </div>
+            <div>
+                <label class="mb-1.5 block text-sm font-semibold text-slate-700">NIM / NIK / NISN <span class="text-xs font-normal text-slate-400 ml-1">(Opsional)</span></label>
+                <input type="text" name="nim" value="{{ old('nim', $peserta->nim) }}" placeholder="Nomor Induk..." class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                @error('nim')<p class="mt-1.5 text-xs font-medium text-rose-500">{{ $message }}</p>@enderror
+            </div>
+
+            <div class="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-700">Jenis Program <span class="text-xs font-normal text-slate-400 ml-1">(Opsional)</span></label>
+                    <select name="jenis_program" class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white">
+                        <option value="">— Pilih Program —</option>
+                        @foreach(['Prakerin (SMK)', 'Magang Mandiri', 'Kampus Merdeka (MSIB)', 'Penelitian/Tugas Akhir'] as $prog)
+                            <option value="{{ $prog }}" @selected(old('jenis_program', $peserta->jenis_program) == $prog)>{{ $prog }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-700">Institusi / Universitas <span class="text-xs font-normal text-slate-400 ml-1">(Opsional)</span></label>
+                    <input type="text" name="institusi" value="{{ old('institusi', $peserta->institusi) }}" placeholder="Asal sekolah/kampus..." class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-700">Jurusan / Prodi <span class="text-xs font-normal text-slate-400 ml-1">(Opsional)</span></label>
+                    <input type="text" name="jurusan" value="{{ old('jurusan', $peserta->jurusan) }}" placeholder="Jurusan..." class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                </div>
+            </div>
+
+            <div class="col-span-1 md:col-span-2">
+                <label class="mb-1.5 block text-sm font-semibold text-slate-700">Alamat Lengkap <span class="text-xs font-normal text-slate-400 ml-1">(Opsional)</span></label>
+                <textarea name="alamat" rows="2" placeholder="Alamat domisili saat ini..." class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500">{{ old('alamat', $peserta->alamat) }}</textarea>
             </div>
 
             <div class="col-span-1 md:col-span-2">

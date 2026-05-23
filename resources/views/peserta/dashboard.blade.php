@@ -145,11 +145,11 @@
 
                 @if($progress->persentase >= 80)
                     <div class="mt-4 rounded-lg bg-emerald-50 border border-emerald-100 px-3 py-2 text-sm text-emerald-700 shadow-sm">
-                        ✨ <strong>Insight Pintar:</strong> Kehadiran Anda sangat baik sejauh ini. Pertahankan!
+                        ✨ <strong>Catatan:</strong> pastikan anda selalu absen dan absen tepat waktu.
                     </div>
                 @elseif($progress->persentase > 0 && $progress->persentase < 50)
                     <div class="mt-4 rounded-lg bg-rose-50 border border-rose-100 px-3 py-2 text-sm text-rose-700 shadow-sm">
-                        ⚠️ <strong>Insight Pintar:</strong> Kehadiran Anda masih di bawah standar, pastikan lebih rajin ya.
+                        ⚠️ <strong>Catatan:</strong> pastikan anda selalu absen dan absen tepat waktu.
                     </div>
                 @endif
             </div>
@@ -162,7 +162,7 @@
                 </a>
                 <a href="{{ route('peserta.history') }}" class="flex shrink-0 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 hover:shadow">
                     <svg class="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    Riwayat Lengkap
+                    Riwayat Kehadiran
                 </a>
             </div>
         </div>

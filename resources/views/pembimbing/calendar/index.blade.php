@@ -73,9 +73,17 @@
                             </td>
                             <td class="px-5 py-4">
                                 @if($p->status_hari_ini === 'hadir')
-                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Hadir
-                                    </span>
+                                    <div class="flex flex-col gap-1 items-start">
+                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Hadir
+                                        </span>
+                                        @if($p->check_in_at)
+                                        <span class="text-[10px] text-slate-500 font-mono">Masuk: {{ \Carbon\Carbon::parse($p->check_in_at)->format('H:i') }}</span>
+                                        @endif
+                                        @if($p->check_out_at)
+                                        <span class="text-[10px] text-slate-500 font-mono">Pulang: {{ \Carbon\Carbon::parse($p->check_out_at)->format('H:i') }}</span>
+                                        @endif
+                                    </div>
                                 @elseif(in_array($p->status_hari_ini, ['izin', 'sakit']))
                                     <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700 ring-1 ring-inset ring-amber-600/20">
                                         <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span> {{ ucfirst($p->status_hari_ini) }}

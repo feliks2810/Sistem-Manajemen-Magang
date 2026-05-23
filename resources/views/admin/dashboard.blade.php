@@ -13,7 +13,7 @@
 </div>
 
 {{-- Metric cards --}}
-<div class="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+<div class="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
     <div class="flex items-start justify-between rounded-[12px] border border-slate-200/80 bg-white p-5 shadow-sm">
         <div>
             <p class="text-sm font-medium text-slate-500">Peserta magang aktif</p>
@@ -61,50 +61,6 @@
         </div>
     </div>
 
-    <div class="flex items-start justify-between rounded-[12px] border border-slate-200/80 bg-white p-5 shadow-sm">
-        <div>
-            <p class="text-sm font-medium text-slate-500">Menunggu verifikasi</p>
-            <p class="mt-2 text-2xl font-bold tracking-tight text-slate-900">{{ $pendingVerifikasi }}</p>
-            <p class="mt-2 text-xs text-slate-400">Pengajuan izin / sakit</p>
-        </div>
-        <div class="flex h-12 w-12 items-center justify-center rounded-[10px] bg-amber-50 text-amber-600">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        </div>
-    </div>
-</div>
-
-{{-- Charts --}}
-<div class="mb-6 grid gap-4 lg:grid-cols-5">
-    <div class="rounded-[12px] border border-slate-200/80 bg-white p-5 shadow-sm lg:col-span-3">
-        <div class="mb-4 flex items-start justify-between gap-2">
-            <div>
-                <h2 class="text-base font-semibold text-slate-900">Tren kehadiran</h2>
-                <p class="text-xs text-slate-500">Jumlah absensi status hadir per bulan</p>
-            </div>
-        </div>
-        <div class="h-64">
-            <canvas
-                id="chart-area-kehadiran"
-                data-labels='@json($chartLabels)'
-                data-hadir='@json($chartHadir)'
-            ></canvas>
-        </div>
-    </div>
-    <div class="rounded-[12px] border border-slate-200/80 bg-white p-5 shadow-sm lg:col-span-2">
-        <div class="mb-4">
-            <h2 class="text-base font-semibold text-slate-900">Hadir vs izin & sakit</h2>
-            <p class="text-xs text-slate-500">Perbandingan per bulan (6 bulan terakhir)</p>
-        </div>
-        <div class="h-64">
-            <canvas
-                id="chart-bar-absensi"
-                data-labels='@json($chartLabels)'
-                data-hadir='@json($chartHadir)'
-                data-izin-sakit='@json($chartIzinSakit)'
-            ></canvas>
-        </div>
-    </div>
-</div>
 
 {{-- Recent activity --}}
 <div class="overflow-hidden rounded-[12px] border border-slate-200/80 bg-white shadow-sm">

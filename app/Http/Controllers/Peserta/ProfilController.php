@@ -16,7 +16,7 @@ class ProfilController extends Controller
         $profile = Auth::user()->pesertaProfile;
         $profile?->load('documents');
 
-        return view('peserta.profile', compact('profile'));
+        return view('peserta.profil-peserta', compact('profile'));
     }
 
     public function update(Request $request): RedirectResponse
@@ -35,7 +35,7 @@ class ProfilController extends Controller
             'avatar' => ['nullable', 'image', 'max:5120', 'mimes:jpg,jpeg,png'],
             'dokumen' => ['nullable', 'file', 'max:5120', 'mimes:pdf'],
             'nama_dokumen' => ['nullable', 'string', 'max:128'],
-            'kategori_dokumen' => ['nullable', 'string', 'in:Surat Pengantar Magang,Surat Balasan Instansi,Lainnya'],
+            'kategori_dokumen' => ['nullable', 'string', 'in:Surat Pengantar Magang,Surat Balasan Instansi,Laporan Magang,Lainnya'],
         ], [
             'nim.required'               => 'NIM/NIS wajib diisi.',
             'nim.max'                    => 'NIM/NIS maksimal 32 karakter.',

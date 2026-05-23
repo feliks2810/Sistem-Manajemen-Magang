@@ -44,7 +44,7 @@
 @endif
 
 {{-- Metric cards --}}
-<div class="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+<div class="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
     <div class="flex items-start justify-between rounded-[14px] border border-slate-200/80 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:border-slate-300">
         <div>
             <p class="text-sm font-medium text-slate-500">Total Bimbingan</p>
@@ -78,17 +78,7 @@
         </div>
     </div>
 
-    <div class="flex items-start justify-between rounded-[14px] border border-slate-200/80 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:border-slate-300">
-        <div>
-            <p class="text-sm font-medium text-slate-500">Rata-rata Nilai</p>
-            <p class="mt-2 text-2xl font-bold tracking-tight text-slate-900">{{ number_format($rataRataNilai, 1) }}</p>
-            <p class="mt-2 text-xs text-slate-400">Dari peserta yang dinilai final</p>
-        </div>
-        <div class="flex h-12 w-12 items-center justify-center rounded-[10px] bg-emerald-50 text-emerald-600 ring-1 ring-inset ring-emerald-500/10">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        </div>
-    </div>
-</div>
+
 
 <div class="mb-6 grid gap-6 lg:grid-cols-3">
     {{-- Tabel Peserta Mini --}}

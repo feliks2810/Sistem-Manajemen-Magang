@@ -49,9 +49,14 @@ class KalenderAbsensiController extends Controller
                 
             $pesertaList->each(function ($p) use ($attendances) {
                 if ($attendances->has($p->id)) {
-                    $p->status_hari_ini = $attendances->get($p->id)->status;
+                    $att = $attendances->get($p->id);
+                    $p->status_hari_ini = $att->status;
+                    $p->check_in_at = $att->check_in_at;
+                    $p->check_out_at = $att->check_out_at;
                 } else {
                     $p->status_hari_ini = 'belum';
+                    $p->check_in_at = null;
+                    $p->check_out_at = null;
                 }
             });
         }

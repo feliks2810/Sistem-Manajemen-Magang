@@ -70,7 +70,7 @@ class LaporanPenilaianController extends Controller
         return response()->streamDownload(function () use ($q): void {
             $out = fopen('php://output', 'w');
             fwrite($out, "\xEF\xBB\xBF");
-            fputcsv($out, ['NIM', 'Nama', 'Pembimbing', 'Total Nilai', 'Final', 'Diperbarui']);
+            fputcsv($out, ['NIM', 'Nama', 'Pembimbing', 'Total Nilai', 'Final', 'Diperbarui'], ';');
 
             foreach ($q->orderBy('id')->cursor() as $ev) {
                 $p = $ev->pesertaProfile;
@@ -82,7 +82,7 @@ class LaporanPenilaianController extends Controller
                     $ev->total_nilai,
                     $ev->is_final ? 'Ya' : 'Tidak',
                     $ev->updated_at?->format('Y-m-d H:i'),
-                ]);
+                ], ';');
             }
 
             fclose($out);

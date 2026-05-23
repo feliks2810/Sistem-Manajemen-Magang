@@ -1,7 +1,7 @@
 @extends('layouts.panel')
 
-@section('title', 'Profil — Peserta')
-@section('page_title', 'Profil saya')
+@section('title', 'Profil Peserta Magang — Peserta')
+@section('page_title', 'Profil Peserta Magang')
 
 @section('content')
 <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
@@ -110,6 +110,7 @@
                         <select name="kategori_dokumen" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white">
                             <option value="Surat Pengantar Magang">Surat Pengantar Magang</option>
                             <option value="Surat Balasan Instansi">Surat Balasan Instansi</option>
+                            <option value="Laporan Magang">Laporan Magang</option>
                             <option value="Lainnya">Lainnya...</option>
                         </select>
                     </div>
