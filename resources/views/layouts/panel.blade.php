@@ -78,8 +78,7 @@
     </aside>
 
     <div id="main-content" class="min-h-screen flex flex-col transition-all duration-300 desktop-pl-64">
-        {{-- Navbar: Split biru (kiri, sejajar sidebar) + putih (kanan) --}}
-        <header class="sticky top-0 z-30 flex h-16 w-full shadow-md relative border-b border-white/20">
+        <header class="sticky top-0 z-30 flex h-16 w-full shrink-0 shadow-md bg-white border-b border-slate-200">
 
             {{-- Kiri: Area Logo (sejajar sidebar w-64) --}}
             <div class="hidden md:flex h-full w-64 shrink-0 items-center bg-white border-b border-slate-200 px-4">
