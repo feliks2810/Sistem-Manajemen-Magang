@@ -19,29 +19,6 @@
     </div>
 </div>
 
-@if($belumDinilaiCount > 0 || $pendingLeavesCount > 0)
-<div class="mb-6 rounded-[12px] border {{ $pendingLeavesCount > 0 ? 'border-amber-200 bg-amber-50' : 'border-blue-200 bg-blue-50' }} p-4 shadow-sm">
-    <div class="flex items-start gap-3">
-        @if($pendingLeavesCount > 0)
-            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-600">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-            </div>
-            <div>
-                <h3 class="text-sm font-medium text-amber-800">Perhatian diperlukan</h3>
-                <p class="mt-1 text-sm text-amber-700">Terdapat <strong>{{ $pendingLeavesCount }} pengajuan izin/sakit</strong> yang menunggu persetujuan Anda.</p>
-            </div>
-        @else
-            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-600">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </div>
-            <div>
-                <h3 class="text-sm font-medium text-blue-800">Insight Pintar</h3>
-                <p class="mt-1 text-sm text-blue-700">Ada <strong>{{ $belumDinilaiCount }} peserta</strong> yang belum Anda berikan penilaian final.</p>
-            </div>
-        @endif
-    </div>
-</div>
-@endif
 
 {{-- Metric cards --}}
 <div class="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -58,7 +35,7 @@
 
     <div class="flex items-start justify-between rounded-[14px] border border-slate-200/80 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:border-slate-300">
         <div>
-            <p class="text-sm font-medium text-slate-500">Izin Menunggu</p>
+            <p class="text-sm font-medium text-slate-500">Menunggu verifikasi izin</p>
             <p class="mt-2 text-2xl font-bold tracking-tight text-slate-900">{{ $pendingLeavesCount }}</p>
             <p class="mt-2 text-xs text-slate-400">Butuh verifikasi</p>
         </div>
@@ -69,7 +46,7 @@
 
     <div class="flex items-start justify-between rounded-[14px] border border-slate-200/80 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:border-slate-300">
         <div>
-            <p class="text-sm font-medium text-slate-500">Belum Dinilai</p>
+            <p class="text-sm font-medium text-slate-500">Nilai Final</p>
             <p class="mt-2 text-2xl font-bold tracking-tight text-slate-900">{{ $belumDinilaiCount }}</p>
             <p class="mt-2 text-xs text-slate-400">Belum mendapat nilai final</p>
         </div>
@@ -80,9 +57,9 @@
 
 
 
-<div class="mb-6 grid gap-6 lg:grid-cols-3">
+<div class="mb-6 flex flex-col gap-6">
     {{-- Tabel Peserta Mini --}}
-    <div class="flex flex-col rounded-[14px] border border-slate-200/80 bg-white shadow-sm lg:col-span-2 overflow-hidden">
+    <div class="flex flex-col rounded-[14px] border border-slate-200/80 bg-white shadow-sm overflow-hidden">
         <div class="flex items-center justify-between border-b border-slate-100 px-6 py-5 bg-white">
             <div>
                 <h2 class="text-lg font-bold text-slate-800">Peserta Bimbingan</h2>

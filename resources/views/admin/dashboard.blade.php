@@ -69,7 +69,6 @@
             <h2 class="text-base font-semibold text-slate-900">Aktivitas terbaru</h2>
             <p class="text-xs text-slate-500">Absensi hari ini — seperti daftar pesanan terbaru</p>
         </div>
-        <a href="{{ route('admin.peserta.create') }}" class="rounded-[10px] bg-blue-600 px-3 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-700">+ Peserta</a>
     </div>
     <div class="overflow-x-auto">
         <table class="min-w-full text-left text-sm">
@@ -114,9 +113,9 @@
 </div>
 
 <div class="mt-6 flex flex-wrap gap-4 text-sm text-slate-600">
-    <a href="{{ route('admin.pembimbing.create') }}" class="font-medium text-blue-600 hover:text-blue-700">Tambah pembimbing</a>
+    <a href="{{ route('admin.peserta.create') }}" class="font-medium text-blue-600 hover:text-blue-700">Tambah peserta</a>
     <span class="text-slate-200">|</span>
-    <a href="{{ route('admin.penilaian.export') }}" class="font-medium text-blue-600 hover:text-blue-700">Export penilaian (CSV)</a>
+    <a href="{{ route('admin.pembimbing.create') }}" class="font-medium text-blue-600 hover:text-blue-700">Tambah pembimbing</a>
 </div>
 @endsection
 
