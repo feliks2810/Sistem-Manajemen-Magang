@@ -140,7 +140,7 @@
                 </div>
                 
                 <div class="h-4 w-full overflow-hidden rounded-full bg-slate-100 shadow-inner ring-1 ring-inset ring-slate-200">
-                    <div class="h-full rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 transition-all duration-1000 ease-out" style="width: <?php echo $progress->persentase; ?>%"></div>
+                    <div class="h-full rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 transition-all duration-1000 ease-out" @style(['width: ' . $progress->persentase . '%'])></div>
                 </div>
 
                 @if($progress->persentase >= 80)

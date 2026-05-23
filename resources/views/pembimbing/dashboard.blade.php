@@ -121,7 +121,7 @@
                                 <div class="flex items-center gap-3">
                                     <span class="font-semibold text-slate-700 font-mono">{{ $p->progress_percent }}%</span>
                                     <div class="h-2 w-20 overflow-hidden rounded-full bg-slate-100 ring-1 ring-inset ring-slate-200">
-                                        <div class="h-full bg-blue-500 rounded-full" style="width: <?php echo $p->progress_percent; ?>%"></div>
+                                        <div class="h-full bg-blue-500 rounded-full" @style(['width: ' . $p->progress_percent . '%'])></div>
                                     </div>
                                 </div>
                             </td>
