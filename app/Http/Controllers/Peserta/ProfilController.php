@@ -64,7 +64,9 @@ class ProfilController extends Controller
         $avatarUploaded = false;
         if ($request->hasFile('avatar')) {
             $avatarPath = $request->file('avatar')->store('avatars', 'public');
-            Auth::user()->update([
+            /** @var \App\Models\User $user */
+            $user = Auth::user();
+            $user->update([
                 'avatar_path' => $avatarPath
             ]);
             $avatarUploaded = true;
