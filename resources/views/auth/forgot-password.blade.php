@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lupa Password — {{ config('app.name') }}</title>
+    <title>Lupa Kata Sandi — {{ config('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         * { box-sizing: border-box; }
@@ -48,7 +48,7 @@
         .field label { display: block; font-size: 0.8125rem; font-weight: 600; color: #374151; margin-bottom: 6px; }
         .input-wrap { position: relative; }
         .input-icon {
-            position: absolute; inset-y: 0; left: 13px;
+            position: absolute; top: 0; bottom: 0; left: 13px;
             display: flex; align-items: center; color: #94a3b8;
             pointer-events: none; transition: color 0.2s;
         }
@@ -113,8 +113,8 @@
             </svg>
         </div>
 
-        <h1>Lupa Password?</h1>
-        <p class="subtitle">Masukkan email Anda dan kami akan membantu Anda mengatur ulang password.</p>
+        <h1>Lupa Kata Sandi?</h1>
+        <p class="subtitle">Masukkan email Anda dan kami akan membantu Anda mengatur ulang kata sandi.</p>
 
         {{-- Success info --}}
         @if(session('success') || session('status'))
@@ -124,7 +124,13 @@
                 </svg>
                 <div>
                     <p style="margin:0;font-weight:700;">Permintaan Dikirim</p>
-                    <p style="margin:4px 0 0;opacity:0.85;">{{ session('success') ?? session('status') }}</p>
+                    <p style="margin:4px 0 0;opacity:0.85;">
+                        @if(session('success') == 'We have emailed your password reset link.' || session('status') == 'We have emailed your password reset link.')
+                            Kami telah mengirimkan tautan atur ulang kata sandi ke email Anda.
+                        @else
+                            {{ session('success') ?? session('status') }}
+                        @endif
+                    </p>
                 </div>
             </div>
         @endif

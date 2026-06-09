@@ -22,7 +22,7 @@
             flex: 1;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(rgba(0, 45, 52, 0.4), rgba(0, 95, 107, 0.7)), url('{{ asset('images/image.png') }}');
+            background: linear-gradient(rgba(0, 45, 52, 0.4), rgba(0, 95, 107, 0.7)), url("{{ asset('images/image.png') }}");
             background-size: cover;
             background-position: center;
             padding: 3rem;
@@ -131,7 +131,7 @@
         .field label { display: block; font-size: 0.8125rem; font-weight: 600; color: #374151; margin-bottom: 6px; }
         .input-wrap { position: relative; }
         .input-icon {
-            position: absolute; inset-y: 0; left: 13px;
+            position: absolute; top: 0; bottom: 0; left: 13px;
             display: flex; align-items: center;
             color: #94a3b8; pointer-events: none;
             transition: color 0.2s;
@@ -156,7 +156,7 @@
             box-shadow: 0 0 0 3.5px rgba(0,157,165,0.13);
         }
         .pass-toggle {
-            position: absolute; inset-y: 0; right: 12px;
+            position: absolute; top: 0; bottom: 0; right: 12px;
             display: flex; align-items: center;
             color: #94a3b8; cursor: pointer;
             background: none; border: none; padding: 4px;
@@ -331,7 +331,7 @@
                 </div>
 
                 {{-- Submit --}}
-                <button type="submit" id="submitBtn" class="btn-submit">Masuk ke Sistem</button>
+                <button type="submit" id="submitBtn" class="btn-submit">Masuk</button>
             </form>
 
             <div class="divider"><span>Sistem Manajemen Magang</span></div>

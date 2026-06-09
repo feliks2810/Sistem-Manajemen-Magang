@@ -92,18 +92,7 @@
             </ul>
         </div>
 
-        <div class="rounded-xl border border-amber-200 bg-amber-50 p-4 relative overflow-hidden">
-            <div class="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-amber-100/50"></div>
-            <label class="relative flex items-start gap-3 cursor-pointer">
-                <div class="flex h-6 items-center">
-                    <input type="checkbox" name="is_final" value="1" @checked(old('is_final', $evaluation->is_final)) class="h-5 w-5 rounded border-amber-300 text-amber-600 focus:ring-amber-600 focus:ring-2 focus:ring-offset-1 transition-all cursor-pointer">
-                </div>
-                <div>
-                    <span class="block text-sm font-bold text-amber-900">Tandai sebagai Penilaian Final</span>
-                    <span class="block text-xs font-medium text-amber-700/80 mt-0.5">Jika ditandai final, nilai akan dibekukan dan dapat dicetak ke dalam sertifikat peserta.</span>
-                </div>
-            </label>
-        </div>
+        <input type="hidden" name="is_final" value="1">
 
         <div class="flex items-center justify-end gap-3 pt-2">
             <a href="{{ route('pembimbing.evaluation.index') }}" class="rounded-xl px-5 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors">Batal</a>
