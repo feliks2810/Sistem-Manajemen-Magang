@@ -327,7 +327,7 @@
                         <input type="checkbox" name="remember">
                         Ingat saya
                     </label>
-                    <a href="{{ route('password.request') }}" class="forgot-link">Lupa password?</a>
+                    <a href="{{ route('password.request') }}" class="forgot-link">Lupa kata sandi?</a>
                 </div>
 
                 {{-- Submit --}}

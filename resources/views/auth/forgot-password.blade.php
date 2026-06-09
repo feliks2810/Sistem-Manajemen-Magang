@@ -103,8 +103,7 @@
         </a>
 
         <div class="logo-wrap">
-            <img src="{{ route('storage.file', 'avatars/logo-rs-awalbros.png') }}" alt="RS Awal Bros"
-                 onerror="this.style.display='none'">
+            <img src="{{ asset('images/logo-rs-awalbros.png') }}" alt="RS Awal Bros" style="height: 48px; width: auto; object-fit: contain;">
         </div>
 
         <div class="icon-wrap">
