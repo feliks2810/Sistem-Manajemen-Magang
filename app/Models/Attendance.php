@@ -16,6 +16,8 @@ class Attendance extends Model
         'check_out_at',
         'check_out_lat',
         'check_out_lng',
+        'is_late',
+        'is_valid',
         'status',
         'keterangan',
     ];
@@ -30,6 +32,8 @@ class Attendance extends Model
             'check_in_lng'  => 'float',
             'check_out_lat' => 'float',
             'check_out_lng' => 'float',
+            'is_late'       => 'boolean',
+            'is_valid'      => 'boolean',
         ];
     }
 

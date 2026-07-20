@@ -38,6 +38,7 @@ class KalenderAbsensiController extends Controller
             $pesertaList = PesertaProfile::query()
                 ->with(['user'])
                 ->where('pembimbing_id', $profile->id)
+                ->whereDate('periode_selesai', '>=', $selectedDate->format('Y-m-d'))
                 ->orderBy('nim')
                 ->get();
                 

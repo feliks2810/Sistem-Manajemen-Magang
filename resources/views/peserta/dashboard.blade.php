@@ -39,7 +39,17 @@
                     <h2 class="font-semibold text-slate-800">Absensi Hari Ini</h2>
                 </div>
                 <div class="p-6">
-                    @if($leaveToday)
+                    @php
+                        $isFinished = \Carbon\Carbon::today()->gt($profile->periode_selesai);
+                    @endphp
+                    @if($isFinished)
+                        <div class="flex flex-col items-center justify-center rounded-xl bg-slate-100 py-8 text-center border border-slate-200 shadow-sm">
+                            <h3 class="text-xl font-bold text-slate-700 mb-2">🎓 Masa Magang Selesai</h3>
+                            <p class="text-slate-500">
+                                Terima kasih atas dedikasi Anda. Menu absensi telah dikunci karena masa magang telah berakhir.
+                            </p>
+                        </div>
+                    @elseif($leaveToday)
                         <div class="flex flex-col items-center justify-center rounded-xl border border-amber-200 bg-amber-50 py-8 text-center shadow-sm">
                             <div class="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-amber-600 ring-1 ring-amber-500/20">
                                 <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>

@@ -64,6 +64,10 @@ class AbsensiController extends Controller
             return response()->json(['success' => false, 'message' => 'Profil peserta tidak ditemukan.'], 404);
         }
 
+        if (Carbon::today()->gt($profile->periode_selesai)) {
+            return response()->json(['success' => false, 'message' => 'Masa magang Anda telah selesai. Anda tidak dapat melakukan absensi.']);
+        }
+
         if (! Carbon::today()->isWeekday()) {
             return response()->json(['success' => false, 'message' => 'Absensi hanya pada hari kerja (Senin–Jumat).']);
         }
@@ -103,11 +107,14 @@ class AbsensiController extends Controller
             return response()->json(['success' => false, 'message' => 'Anda sudah check-in hari ini.']);
         }
 
+        $is_late = now()->format('H:i:s') > '08:10:00';
+
         $att->update([
             'check_in_at'  => now(),
             'check_in_lat' => $lat,
             'check_in_lng' => $lng,
             'status'       => 'hadir',
+            'is_late'      => $is_late,
         ]);
 
         return response()->json([
@@ -123,6 +130,10 @@ class AbsensiController extends Controller
         $profile = Auth::user()->pesertaProfile;
         if (! $profile) {
             return response()->json(['success' => false, 'message' => 'Profil peserta tidak ditemukan.'], 404);
+        }
+
+        if (Carbon::today()->gt($profile->periode_selesai)) {
+            return response()->json(['success' => false, 'message' => 'Masa magang Anda telah selesai. Anda tidak dapat melakukan absensi.']);
         }
 
         // Validasi input koordinat
@@ -157,10 +168,18 @@ class AbsensiController extends Controller
             return response()->json(['success' => false, 'message' => 'Anda sudah check-out hari ini.']);
         }
 
+        $now = now();
+        $is_friday = $now->isFriday();
+        $minimumCheckoutTime = $is_friday ? '16:30:00' : '16:00:00';
+        
+        $durationHours = $att->check_in_at->diffInHours($now);
+        $is_valid = ($now->format('H:i:s') >= $minimumCheckoutTime) && ($durationHours >= 7);
+
         $att->update([
-            'check_out_at'  => now(),
+            'check_out_at'  => $now,
             'check_out_lat' => $lat,
             'check_out_lng' => $lng,
+            'is_valid'      => $is_valid,
         ]);
 
         return response()->json([
